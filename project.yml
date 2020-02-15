@@ -1,0 +1,23 @@
+name: BeforeAndAfter
+options:
+  bundleIdPrefix: com.matsuchiyo
+  deploymentTarget:
+    iOS: "13.2"
+targets:
+  BeforeAndAfter:
+    platform: iOS
+    type: application
+    sources: [BeforeAndAfter]
+    dependencies: []
+  BeforeAndAfterTests:
+    platform: iOS
+    type: bundle.unit-test
+    sources: [BeforeAndAfterTests]
+    dependencies:
+      - target: BeforeAndAfter
+  BeforeAndAfterUITests:
+    platform: iOS
+    type: bundle.ui-testing
+    sources: [BeforeAndAfterUITests]
+    dependencies:
+      - target: BeforeAndAfter
