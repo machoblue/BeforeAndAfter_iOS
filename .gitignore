@@ -90,4 +90,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 
-BeforeAndAfter.xcodeproj/project.pbxproj
+*/project.pbxproj
+*/contents.xcworkspacedata
+.DS_Store
+*/xcuserdata/*
