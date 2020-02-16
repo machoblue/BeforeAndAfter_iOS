@@ -34,18 +34,9 @@ class HistoryViewModel: ObservableObject {
     
     init(recordRepository: RecordRepositoryProtocol = RecordRepository()) {
         self.recordRepository = recordRepository
-//        getRecords()
         bindInputs()
         bindOutputs()
     }
-    
-//    private func getRecords() {
-//        records.append(Record(time: Date().timeIntervalSince1970, weight: 70, fatPercent: 25))
-//        records.append(Record(time: Date().timeIntervalSince1970, weight: 70, fatPercent: 25))
-//        records.append(Record(time: Date().timeIntervalSince1970, weight: 70, fatPercent: 25))
-//        records.append(Record(time: Date().timeIntervalSince1970, weight: 70, fatPercent: 25))
-//        records.append(Record(time: Date().timeIntervalSince1970, weight: 70, fatPercent: 25))
-//    }
     
     private func bindInputs() {
         let recordsInputStream = onAppearSubject
