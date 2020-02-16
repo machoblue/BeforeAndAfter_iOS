@@ -10,7 +10,7 @@ import SwiftUI
 struct BATabView: View {
     var body: some View {
         TabView {
-            HistoryView(viewModel: HistoryViewModel())
+            HistoryView(viewModel: HistoryViewModel(recordRepository: RecordRepository()))
                 .tabItem {
                     Image("history-24px")
                         .renderingMode(.template)

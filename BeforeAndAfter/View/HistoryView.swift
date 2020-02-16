@@ -18,11 +18,14 @@ struct HistoryView: View {
             }
             .navigationBarTitle("History", displayMode: .inline)
         }
+        .onAppear {
+            self.viewModel.apply(.onAppear)
+        }
     }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView(viewModel: HistoryViewModel())
+        HistoryView(viewModel: HistoryViewModel(recordRepository: RecordRepository()))
     }
 }
