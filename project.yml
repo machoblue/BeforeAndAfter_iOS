@@ -8,7 +8,9 @@ targets:
     platform: iOS
     type: application
     sources: [BeforeAndAfter]
-    dependencies: []
+    dependencies: 
+      - carthage: Realm
+      - carthage: RealmSwift
   BeforeAndAfterTests:
     platform: iOS
     type: bundle.unit-test

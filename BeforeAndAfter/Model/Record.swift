@@ -8,10 +8,7 @@
 import Foundation
 
 struct Record: Identifiable {
-    var id: Double {
-        return time
-    }
-    
+    var id = UUID().uuidString
     var time: TimeInterval
     var weight: Float? = nil
     var fatPercent: Float? = nil
