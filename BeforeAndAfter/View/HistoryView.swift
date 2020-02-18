@@ -17,6 +17,11 @@ struct HistoryView: View {
                 HistoryRow(record: record)
             }
             .navigationBarTitle("History", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button("Add") {
+                    print("TODO: Show AddView")
+                }
+            )
         }
         .onAppear {
             self.viewModel.apply(.onAppear)
