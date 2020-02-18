@@ -24,7 +24,7 @@ class HistoryViewModel: ObservableObject {
     private var onAppearSubject = PassthroughSubject<Void, Never>()
     
     // MARK: - Output
-    @Published var records: [Record] = []
+    @Published var records: [RecordViewData] = []
     
     private let recordsSubject = PassthroughSubject<[Record], Never>()
     
@@ -32,6 +32,10 @@ class HistoryViewModel: ObservableObject {
     
     private let recordRepository: RecordRepositoryProtocol
     
+    private let yearFormatter = DateFormatter.yearFormatter
+    private let dateFormatter = DateFormatter.dateFormatter
+    private let timeFormatter = DateFormatter.timeFormatter
+
     init(recordRepository: RecordRepositoryProtocol = RecordRepository()) {
         self.recordRepository = recordRepository
         bindInputs()
@@ -50,7 +54,16 @@ class HistoryViewModel: ObservableObject {
     }
     
     private func bindOutputs() {
-        let recordsOutputStream = recordsSubject.assign(to: \.records, on: self)
+        let recordsOutputStream = recordsSubject
+            .map { records in
+                records.map { record in
+                    RecordViewData(from: record,
+                                   yearText: self.yearFormatter.string(from: Date(timeIntervalSince1970: record.time)),
+                                   dateText: self.dateFormatter.string(from: Date(timeIntervalSince1970: record.time)),
+                                   timeText: self.timeFormatter.string(from: Date(timeIntervalSince1970: record.time)))
+                }
+            }
+            .assign(to: \.records, on: self)
         cancellables.append(recordsOutputStream)
     }
 }
