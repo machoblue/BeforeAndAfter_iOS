@@ -10,6 +10,7 @@ import SwiftUI
 struct HistoryView: View {
     
     @ObservedObject var viewModel: HistoryViewModel
+    @State var showEditAdd = false
     
     var body: some View {
         NavigationView {
@@ -18,8 +19,12 @@ struct HistoryView: View {
             }
             .navigationBarTitle("History", displayMode: .inline)
             .navigationBarItems(trailing:
-                Button("Add") {
-                    print("TODO: Show AddView")
+                Button(action: {
+                    self.showEditAdd.toggle()
+                }) {
+                    Text("Add")
+                }.sheet(isPresented: $showEditAdd) {
+                    EditAddRecordView()
                 }
             )
         }
