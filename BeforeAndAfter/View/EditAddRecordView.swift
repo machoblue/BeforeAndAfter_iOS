@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct EditAddRecordView: View {
+    @State var record: Record
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .navigationBarTitle("Edit", displayMode: .inline)
+        NavigationView {
+            RecordFormView(record: $record)
+                .navigationBarTitle("Edit", displayMode: .inline)
+        }
     }
 }
 
 struct EditAddRecordView_Previews: PreviewProvider {
     static var previews: some View {
-        EditAddRecordView()
+        EditAddRecordView(record: Record(time: Date().timeIntervalSince1970))
     }
 }
