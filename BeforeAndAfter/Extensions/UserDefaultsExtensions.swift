@@ -10,6 +10,7 @@ import Foundation
 extension UserDefaults {
     private static var latestWeightKey = "latestWeight"
     private static var latestFatPercentKey = "latestFatPercent"
+    private static var graphDisplayModeKey = "graphDisplayMode"
 
     static var latestWeight: Float? {
         get {
@@ -31,6 +32,16 @@ extension UserDefaults {
         
         set {
             UserDefaults.standard.set(newValue, forKey: Self.latestFatPercentKey)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    static var graphDisplayMode: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: graphDisplayModeKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: graphDisplayModeKey)
             UserDefaults.standard.synchronize()
         }
     }
