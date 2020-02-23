@@ -24,7 +24,7 @@ struct HistoryView: View {
                 }) {
                     Text("Add")
                 }.sheet(isPresented: $showEditAdd) {
-                    EditAddRecordView(record: Record(time: Date().timeIntervalSince1970))
+                    AddRecordView(record: Record(time: Date().timeIntervalSince1970), viewModel: AddRecordViewModel())
                 }
             )
         }

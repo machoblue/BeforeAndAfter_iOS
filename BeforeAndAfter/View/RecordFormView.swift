@@ -71,17 +71,9 @@ struct RecordFormView: View {
                 }
             }
 
-            /*
             Section(header: Text("Note")) {
-//                TextField("", text: record.note)
-                if record.note == nil {
-                    TextField("", text: .constant(""))
-                } else {
-                    TextField("", text: record.note!)
-                }
-//                Text("NOTE")
+                TextField("Note", text: $record.note.bound)
             }
- */
 
         }
         .listStyle(GroupedListStyle())

@@ -12,6 +12,7 @@ import RealmSwift
 
 protocol RecordRepositoryProtocol {
     func list() -> AnyPublisher<[Record], Never>
+    func add(record: Record) -> AnyPublisher<Void, Never>
 }
 
 class RecordRepository: RecordRepositoryProtocol {
@@ -27,6 +28,13 @@ class RecordRepository: RecordRepositoryProtocol {
     func list() -> AnyPublisher<[Record], Never> {
         records.send(realm.objects(RealmRecord.self).map { Record(from: $0) })
         return records.eraseToAnyPublisher()
+    }
+    
+    func add(record: Record) -> AnyPublisher<Void, Never> {
+        try! realm.write {
+            realm.add(record.realmRecord)
+        }
+        return PassthroughSubject<Void, Never>().eraseToAnyPublisher()
     }
 }
 
@@ -53,5 +61,17 @@ extension Record {
         self.frontImage = from.frontImage
         self.sideImage = from.sideImage
         self.note = from.note
+    }
+    
+    var realmRecord: RealmRecord {
+        let realmRecord = RealmRecord()
+        realmRecord.id = id
+        realmRecord.time = time
+        realmRecord.weight = weight ?? 0
+        realmRecord.fatPercent = fatPercent ?? 0
+        realmRecord.frontImage = frontImage
+        realmRecord.sideImage = sideImage
+        realmRecord.note = note
+        return realmRecord
     }
 }

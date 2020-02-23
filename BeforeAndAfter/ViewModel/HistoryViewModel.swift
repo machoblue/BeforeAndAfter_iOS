@@ -26,6 +26,7 @@ class HistoryViewModel: ObservableObject {
     // MARK: - Output
     @Published var records: [RecordViewData] = []
     
+    // MARK: - Other
     private let recordsSubject = PassthroughSubject<[Record], Never>()
     
     private var cancellables: [AnyCancellable] = []
