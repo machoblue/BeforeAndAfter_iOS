@@ -13,6 +13,7 @@ import RealmSwift
 protocol RecordRepositoryProtocol {
     func list() -> AnyPublisher<[Record], Never>
     func insertOrUpdate(record: Record) -> AnyPublisher<Void, Never>
+    func delete(_ record: Record) -> AnyPublisher<Void, Never>
 }
 
 class RecordRepository: RecordRepositoryProtocol {
@@ -34,7 +35,7 @@ class RecordRepository: RecordRepositoryProtocol {
         let results = realm.objects(RealmRecord.self)
         self.notificationToken = results.observe { [weak self] changes in
             guard let self = self else { return }
-            self.records.send(results.map { Record(from: $0) })
+            self.records.send(results.map { Record(from: $0) }.sorted { $0.time > $1.time })
         }
         return records.eraseToAnyPublisher()
     }
@@ -45,6 +46,16 @@ class RecordRepository: RecordRepositoryProtocol {
         }
         return PassthroughSubject<Void, Never>().eraseToAnyPublisher()
     }
+    
+    func delete(_ record: Record) -> AnyPublisher<Void, Never> {
+        if let target = realm.object(ofType: RealmRecord.self, forPrimaryKey: record.id) {
+            try! realm.write {
+                realm.delete(target)
+            }
+        }
+        return PassthroughSubject<Void, Never>().eraseToAnyPublisher()
+    }
+    
 }
 
 class RealmRecord: Object {

@@ -14,9 +14,15 @@ struct HistoryView: View {
     
     var body: some View {
         NavigationView {
-            List (viewModel.records) { record in
-                NavigationLink(destination: EditRecordView(record: record.record, viewModel: EditAddRecordViewModel())) {
-                    HistoryRow(record: record)
+            List {
+                ForEach(viewModel.records) { record in
+                    NavigationLink(destination: EditRecordView(record: record.record, viewModel: EditAddRecordViewModel())) {
+                        HistoryRow(record: record)
+                    }
+                }
+                .onDelete { indexSet in
+                    guard let index = indexSet.first else { return }
+                    self.viewModel.apply(.onDelete(record: self.viewModel.records[index]))
                 }
             }
             .navigationBarTitle("History", displayMode: .inline)
