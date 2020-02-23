@@ -22,7 +22,13 @@ struct RecordFormView: View {
     // https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working
     var weightProxy: Binding<String> {
         Binding<String>(
-            get: { String(format: "%.02f", self.record.weight ?? 0) },
+            get: {
+                if let weight = self.record.weight {
+                    return String(format: "%.02f", weight)
+                } else {
+                    return ""
+                }
+            },
             set: {
                 if let value = NumberFormatter().number(from: $0) {
                     self.record.weight = value.floatValue
@@ -33,7 +39,13 @@ struct RecordFormView: View {
     
     var fatPercentProxy: Binding<String> {
         Binding<String>(
-            get: { String(format: "%.02f", self.record.fatPercent ?? 0) },
+            get: {
+                if let fatPercent = self.record.fatPercent {
+                    return String(format: "%.02f", fatPercent)
+                } else {
+                    return ""
+                }
+            },
             set: {
                 if let value = NumberFormatter().number(from: $0) {
                     self.record.fatPercent = value.floatValue
