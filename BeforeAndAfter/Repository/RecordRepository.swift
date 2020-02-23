@@ -44,6 +44,8 @@ class RecordRepository: RecordRepositoryProtocol {
         try! realm.write {
             realm.add(record.realmRecord, update: .modified)
         }
+        UserDefaults.latestWeight = record.weight
+        UserDefaults.latestFatPercent = record.fatPercent
         return PassthroughSubject<Void, Never>().eraseToAnyPublisher()
     }
     
