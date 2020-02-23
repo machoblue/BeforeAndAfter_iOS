@@ -15,7 +15,7 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             List (viewModel.records) { record in
-                NavigationLink(destination: EditRecordView(record: record.record, viewModel: AddRecordViewModel())) {
+                NavigationLink(destination: EditRecordView(record: record.record, viewModel: EditAddRecordViewModel())) {
                     HistoryRow(record: record)
                 }
             }
@@ -26,7 +26,7 @@ struct HistoryView: View {
                 }) {
                     Text("Add")
                 }.sheet(isPresented: $showEditAdd) {
-                    AddRecordView(record: Record(time: Date().timeIntervalSince1970), viewModel: AddRecordViewModel())
+                    AddRecordView(record: Record(time: Date().timeIntervalSince1970), viewModel: EditAddRecordViewModel())
                 }
             )
         }

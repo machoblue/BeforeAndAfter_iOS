@@ -1,5 +1,5 @@
 //
-//  AddRecordViewModel.swift
+//  EditAddRecordViewModel.swift
 //  BeforeAndAfter
 //
 //  Created by 松島勇貴 on 2020/02/21.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AddRecordViewModel: ObservableObject {
+class EditAddRecordViewModel: ObservableObject {
     // MARK: - Input
     enum Input {
         case onSaveButtonTapped(record: Record)
@@ -21,15 +21,15 @@ class AddRecordViewModel: ObservableObject {
     }
     private var onSaveButtonTappedSubject = PassthroughSubject<Record, Never>()
     
+    // MARK: - Intermediate
+    private var saveSubject = PassthroughSubject<Void, Never>()
+
     // MARK: - Output
     
     // MARK: - Other
     private var cancellables: [AnyCancellable] = []
     private let recordRepository: RecordRepositoryProtocol
     
-    // MARK: - Intermediate
-    private var saveSubject = PassthroughSubject<Void, Never>()
-
     init(recordRepository: RecordRepositoryProtocol = RecordRepository()) {
         self.recordRepository = recordRepository
         bindInputs()

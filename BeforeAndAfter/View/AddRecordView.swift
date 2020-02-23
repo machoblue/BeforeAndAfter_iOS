@@ -10,7 +10,7 @@ import SwiftUI
 struct AddRecordView: View {
     @State var record: Record
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel: AddRecordViewModel
+    @ObservedObject var viewModel: EditAddRecordViewModel
 
     var body: some View {
         NavigationView {
@@ -35,6 +35,6 @@ struct AddRecordView: View {
 
 struct AddRecordView_Previews: PreviewProvider {
     static var previews: some View {
-        AddRecordView(record: Record(time: Date().timeIntervalSince1970), viewModel: AddRecordViewModel())
+        AddRecordView(record: Record(time: Date().timeIntervalSince1970), viewModel: EditAddRecordViewModel())
     }
 }
