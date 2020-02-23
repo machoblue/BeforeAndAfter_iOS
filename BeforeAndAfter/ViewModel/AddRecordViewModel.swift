@@ -39,7 +39,7 @@ class AddRecordViewModel: ObservableObject {
     private func bindInputs() {
         let saveStream = onSaveButtonTappedSubject
             .flatMap { [recordRepository] record in
-                recordRepository.add(record: record)
+                recordRepository.insertOrUpdate(record: record)
             }
         .share()
         .subscribe(saveSubject)

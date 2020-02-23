@@ -20,7 +20,7 @@ struct AddRecordView: View {
                     leading: Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
-                        Text("Close")
+                        Text("Cancel")
                     },
                     trailing: Button(action: {
                         self.viewModel.apply(.onSaveButtonTapped(record: self.record))

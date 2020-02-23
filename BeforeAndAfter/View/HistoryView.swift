@@ -15,7 +15,9 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             List (viewModel.records) { record in
-                HistoryRow(record: record)
+                NavigationLink(destination: EditRecordView(record: record.record, viewModel: AddRecordViewModel())) {
+                    HistoryRow(record: record)
+                }
             }
             .navigationBarTitle("History", displayMode: .inline)
             .navigationBarItems(trailing:

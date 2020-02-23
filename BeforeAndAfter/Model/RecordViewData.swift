@@ -32,4 +32,8 @@ struct RecordViewData: Identifiable {
         self.dateText = dateText
         self.timeText = timeText
     }
+    
+    var record: Record {
+        return Record(id: id, time: time, weight: weight, fatPercent: fatPercent, note: note, frontImage: frontImage, sideImage: sideImage)
+    }
 }

@@ -12,7 +12,7 @@ import RealmSwift
 
 protocol RecordRepositoryProtocol {
     func list() -> AnyPublisher<[Record], Never>
-    func add(record: Record) -> AnyPublisher<Void, Never>
+    func insertOrUpdate(record: Record) -> AnyPublisher<Void, Never>
 }
 
 class RecordRepository: RecordRepositoryProtocol {
@@ -39,9 +39,9 @@ class RecordRepository: RecordRepositoryProtocol {
         return records.eraseToAnyPublisher()
     }
     
-    func add(record: Record) -> AnyPublisher<Void, Never> {
+    func insertOrUpdate(record: Record) -> AnyPublisher<Void, Never> {
         try! realm.write {
-            realm.add(record.realmRecord)
+            realm.add(record.realmRecord, update: .modified)
         }
         return PassthroughSubject<Void, Never>().eraseToAnyPublisher()
     }
