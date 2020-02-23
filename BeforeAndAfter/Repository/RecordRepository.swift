@@ -20,13 +20,22 @@ class RecordRepository: RecordRepositoryProtocol {
     var records = CurrentValueSubject<[Record], Never>([])
     
     let realm: Realm
-    
+    var notificationToken: NotificationToken?
+
     init() {
         self.realm = try! Realm()
     }
     
+    deinit {
+        self.notificationToken?.invalidate()
+    }
+    
     func list() -> AnyPublisher<[Record], Never> {
-        records.send(realm.objects(RealmRecord.self).map { Record(from: $0) })
+        let results = realm.objects(RealmRecord.self)
+        self.notificationToken = results.observe { [weak self] changes in
+            guard let self = self else { return }
+            self.records.send(results.map { Record(from: $0) })
+        }
         return records.eraseToAnyPublisher()
     }
     
