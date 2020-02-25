@@ -26,6 +26,17 @@ enum GraphDisplayMode: Int, CaseIterable, Identifiable {
     var id: Int {
         return self.rawValue
     }
+    
+    var time: TimeInterval {
+        switch self {
+        case .threeWeeks:
+            return 60 * 60 * 24 * 21
+        case .threeMonths:
+            return 60 * 60 * 24 * 90
+        case .oneYear:
+            return 60 * 60 * 24 * 365
+        }
+    }
 }
 
 struct GraphView: View {
