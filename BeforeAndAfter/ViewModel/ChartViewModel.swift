@@ -1,5 +1,5 @@
 //
-//  GraphViewModel.swift
+//  ChartViewModel.swift
 //  BeforeAndAfter
 //
 //  Created by 松島勇貴 on 2020/02/24.
@@ -10,7 +10,7 @@ import Foundation
 import Foundation
 import Combine
 
-class GraphViewModel: ObservableObject {
+class ChartViewModel: ObservableObject {
 
     // MARK: - Input
     enum Input {
@@ -55,6 +55,6 @@ class GraphViewModel: ObservableObject {
     private func bindOutputs() {
         let recordsOutputStream = recordsSubject
             .assign(to: \.records, on: self)
-        cancellables.append(recordsOutputStream)
+        cancellables += [recordsOutputStream]
     }
 }

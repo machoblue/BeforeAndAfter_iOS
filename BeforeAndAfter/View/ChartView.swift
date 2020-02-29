@@ -40,10 +40,10 @@ enum ChartRange: Int, CaseIterable, Identifiable {
 }
 
 struct ChartView: View {
-    @ObservedObject var viewModel: GraphViewModel
+    @ObservedObject var viewModel: ChartViewModel
     @State private var mode: ChartRange = .threeWeeks
 
-    init(viewModel: GraphViewModel = GraphViewModel()) {
+    init(viewModel: ChartViewModel = ChartViewModel()) {
         self.viewModel = viewModel
         self.mode = ChartRange(rawValue: UserDefaults.graphDisplayMode) ?? .threeWeeks
     }
