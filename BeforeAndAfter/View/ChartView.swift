@@ -1,5 +1,5 @@
 //
-//  GraphView.swift
+//  ChartView.swift
 //  BeforeAndAfter
 //
 //  Created by 松島勇貴 on 2020/02/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum GraphDisplayMode: Int, CaseIterable, Identifiable {
+enum ChartRange: Int, CaseIterable, Identifiable {
     case threeWeeks
     case threeMonths
     case oneYear
@@ -39,23 +39,24 @@ enum GraphDisplayMode: Int, CaseIterable, Identifiable {
     }
 }
 
-struct GraphView: View {
+struct ChartView: View {
     @ObservedObject var viewModel: GraphViewModel
-    @State private var mode: GraphDisplayMode = .threeWeeks
+    @State private var mode: ChartRange = .threeWeeks
 
     init(viewModel: GraphViewModel = GraphViewModel()) {
         self.viewModel = viewModel
-        self.mode = GraphDisplayMode(rawValue: UserDefaults.graphDisplayMode) ?? .threeWeeks
+        self.mode = ChartRange(rawValue: UserDefaults.graphDisplayMode) ?? .threeWeeks
     }
     
     var body: some View {
         VStack {
             Picker("Mode", selection: $mode) {
-                ForEach(GraphDisplayMode.allCases) { mode in
+                ForEach(ChartRange.allCases) { mode in
                     Text(mode.title).tag(mode)
                 }
             }.pickerStyle(SegmentedPickerStyle())
-            TwoScaleLineGraph(mode: $mode, records: $viewModel.records)
+//            TwoScaleLineGraph(mode: $mode, records: $viewModel.records)
+            LineChart(mode: $mode, records: $viewModel.records)
         }
         .onAppear {
             self.viewModel.apply(.onAppear)
@@ -68,6 +69,6 @@ struct GraphView: View {
 
 struct GraphView_Previews: PreviewProvider {
     static var previews: some View {
-        GraphView()
+        ChartView()
     }
 }

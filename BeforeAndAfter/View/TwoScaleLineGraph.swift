@@ -14,7 +14,7 @@ struct TwoScaleLineGraph: View {
     let marginTrailing = BAMargin.medium
     let marginBottom = BAMargin.medium
     
-    @Binding var mode: GraphDisplayMode
+    @Binding var mode: ChartRange
     @Binding var records: [Record]
     
     var body: some View {
@@ -92,7 +92,7 @@ struct TwoScaleLineGraph: View {
 
 struct TwoScaleLineGraph_Previews: PreviewProvider {
     static var previews: some View {
-        TwoScaleLineGraph(mode: .constant(GraphDisplayMode.threeWeeks), records: .constant([
+        TwoScaleLineGraph(mode: .constant(.threeWeeks), records: .constant([
             Record(time: Date().timeIntervalSince1970 - 60 * 60 * 24 * 30, weight: 80),
             Record(time: Date().timeIntervalSince1970 - 60 * 60 * 24 * 20, weight: 70),
             Record(time: Date().timeIntervalSince1970 - 60 * 60 * 24 * 12, weight: 72),

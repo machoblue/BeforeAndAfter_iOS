@@ -17,7 +17,7 @@ struct BATabView: View {
                         .foregroundColor(.blue)
                     Text("History")
                 }
-            GraphView()
+            ChartView()
                 .tabItem {
                     Image("show_chart-24px")
                         .renderingMode(.template)
