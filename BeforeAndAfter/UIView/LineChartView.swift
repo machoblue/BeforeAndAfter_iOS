@@ -67,6 +67,8 @@ class LineChartView: UIView {
         calculateYAxisRange()
         calculateXAxisRange()
         
+        drawHorizontalLines(rect: rect)
+        
         drawWeightChart(rect: rect)
         drawFatPercentChart(rect: rect)
     }
@@ -200,5 +202,17 @@ class LineChartView: UIView {
         }
         
         lineChartPath.stroke()
+    }
+    
+    private func drawHorizontalLines(rect: CGRect) {
+        let path = UIBezierPath()
+        UIColor.lightGray.set()
+        for i in 1..<Int(weightUpperLimit - weightLowerLimit) {
+            let y = graphOffsetY + graphHeight - graphHeight * CGFloat(Float(i) / (weightUpperLimit - weightLowerLimit))
+            print(graphOffsetY, graphWidth, y)
+            path.move(to: CGPoint(x: graphOffsetX, y: y))
+            path.addLine(to: CGPoint(x: graphOffsetX + graphWidth, y: y))
+        }
+        path.stroke()
     }
 }
