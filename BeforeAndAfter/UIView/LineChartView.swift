@@ -48,8 +48,7 @@ class LineChartView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .white
     }
-    
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -105,7 +104,6 @@ class LineChartView: UIView {
     }
     
     private func calculateXAxisRange() {
-//        let offset = Double(60 * 60 * 24)
         let offset = self.mode.time * 0.05
         toTime = Date().timeIntervalSince1970 + offset
         fromTime = toTime - (self.mode.time + offset)
@@ -113,30 +111,47 @@ class LineChartView: UIView {
     
     private func drawWeightChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
-        for (index, record) in self.records.enumerated() {
+        lineChartPath.lineWidth = 1.5
+        UIColor.red.set()
+        
+        let filteredRecords = records.filter { $0.weight ?? 0 > 0 }.sorted { $0.time < $1.time }
+        for (index, record) in filteredRecords.enumerated() {
             guard let weight = record.weight else { return }
             let x = self.marginLeading + self.graphWidth * CGFloat((record.time - fromTime) / (toTime - fromTime))
-            
             let y = self.marginTop + self.graphHeight * CGFloat((self.weightUpperLimit - weight) / (self.weightUpperLimit - self.weightLowerLimit))
             let point = CGPoint(x: x, y: y)
-            if record.time >= fromTime, record.time <= toTime {
+            
+            switch record.time {
+            case 0..<fromTime:
+                guard
+                    let nextRecord = filteredRecords.get(at: index + 1),
+                    let nextWeight = nextRecord.weight,
+                    nextRecord.time >= fromTime, nextRecord.time <= toTime
+                else {
+                    continue
+                }
+                
+                let weightAtFromTime: Float = weight + (nextWeight - weight) * Float((fromTime - record.time) / (nextRecord.time - record.time))
+                let y2 = self.marginTop + self.graphHeight * CGFloat((self.weightUpperLimit - weightAtFromTime) / (self.weightUpperLimit - self.weightLowerLimit))
+                let pointAtFromTime = CGPoint(x: graphOffsetX, y: y2)
+                lineChartPath.move(to: pointAtFromTime)
+
+            case fromTime...toTime:
                 if index == 0 { // 直前のレコードがない
                     lineChartPath.move(to: point)
                 } else {
-                    lineChartPath.addLine(to: point)
+                    lineChartPath.addLine(to: point) 
                 }
-
-            } else {
-                if index + 1 < self.records.count { // 次のrecordがある
-                    let nextRecord = self.records[index + 1]
-                    if nextRecord.time >= fromTime, nextRecord.time <= toTime { // かつそれが　範囲内
-                        lineChartPath.move(to: point)
-                    }
-                }
+                
+                let dotPath = UIBezierPath()
+                dotPath.addArc(withCenter: point, radius: 3, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+                dotPath.fill()
+                
+            default:
+                continue
             }
         }
         
-        UIColor.red.set()
         lineChartPath.stroke()
     }
 }
