@@ -68,6 +68,7 @@ class LineChartView: UIView {
         calculateXAxisRange()
         
         drawWeightChart(rect: rect)
+        drawFatPercentChart(rect: rect)
     }
 
     private func drawChartFrame(rect: CGRect) {
@@ -141,6 +142,52 @@ class LineChartView: UIView {
                     lineChartPath.move(to: point)
                 } else {
                     lineChartPath.addLine(to: point) 
+                }
+                
+                let dotPath = UIBezierPath()
+                dotPath.addArc(withCenter: point, radius: 3, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+                dotPath.fill()
+                
+            default:
+                continue
+            }
+        }
+        
+        lineChartPath.stroke()
+    }
+    
+    private func drawFatPercentChart(rect: CGRect) {
+        let lineChartPath = UIBezierPath()
+        lineChartPath.lineWidth = 1.5
+        UIColor.blue.set()
+        
+        let filteredRecords = records.filter { $0.fatPercent ?? 0 > 0 }.sorted { $0.time < $1.time }
+        for (index, record) in filteredRecords.enumerated() {
+            guard let fatPercent = record.fatPercent else { return }
+            let x = self.marginLeading + self.graphWidth * CGFloat((record.time - fromTime) / (toTime - fromTime))
+            let y = self.marginTop + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercent) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
+            let point = CGPoint(x: x, y: y)
+            
+            switch record.time {
+            case 0..<fromTime:
+                guard
+                    let nextRecord = filteredRecords.get(at: index + 1),
+                    let nextFatPercent = nextRecord.fatPercent,
+                    nextRecord.time >= fromTime, nextRecord.time <= toTime
+                else {
+                    continue
+                }
+                
+                let fatPercentAtFromTime: Float = fatPercent + (nextFatPercent - fatPercent) * Float((fromTime - record.time) / (nextRecord.time - record.time))
+                let y2 = self.marginTop + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercentAtFromTime) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
+                let pointAtFromTime = CGPoint(x: graphOffsetX, y: y2)
+                lineChartPath.move(to: pointAtFromTime)
+
+            case fromTime...toTime:
+                if index == 0 { // 直前のレコードがない
+                    lineChartPath.move(to: point)
+                } else {
+                    lineChartPath.addLine(to: point)
                 }
                 
                 let dotPath = UIBezierPath()
