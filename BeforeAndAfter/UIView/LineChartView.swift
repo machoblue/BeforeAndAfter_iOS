@@ -116,7 +116,7 @@ class LineChartView: UIView {
     private func drawWeightChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.red.set()
+        UIColor.red.withAlphaComponent(0.5).set()
         
         let filteredRecords = records.filter { $0.weight ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
@@ -162,7 +162,7 @@ class LineChartView: UIView {
     private func drawFatPercentChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.blue.set()
+        UIColor.blue.withAlphaComponent(0.5).set()
         
         let filteredRecords = records.filter { $0.fatPercent ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
@@ -208,10 +208,30 @@ class LineChartView: UIView {
     private func drawHorizontalLines(rect: CGRect) {
         let path = UIBezierPath()
         UIColor.lightGray.set()
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: BAFontSize.medium),
+            NSAttributedString.Key.foregroundColor: UIColor.gray,
+        ]
+        
         for i in 1..<Int(weightUpperLimit - weightLowerLimit) {
             let y = graphOffsetY + graphHeight - graphHeight * CGFloat(Float(i) / (weightUpperLimit - weightLowerLimit))
             path.move(to: CGPoint(x: graphOffsetX, y: y))
             path.addLine(to: CGPoint(x: graphOffsetX + graphWidth, y: y))
+            
+            let leftAxisLabelString = String(format: "%.1f", weightLowerLimit + Float(i)) as NSString
+            let leftAxisLabelSize = leftAxisLabelString.size(withAttributes: attributes)
+            let leftAxisLabelX = graphOffsetX + 5
+            let leftAxisLabelY = y - leftAxisLabelSize.height / 2
+            let leftAxisLabelPoint = CGPoint(x: leftAxisLabelX, y: leftAxisLabelY)
+            leftAxisLabelString.draw(at: leftAxisLabelPoint, withAttributes: attributes)
+            
+            let rightAxisLabelString = String(format: "%.1f", fatPercentLowerLimit + Float(i)) as NSString
+            let rightAxisLabelSize = rightAxisLabelString.size(withAttributes: attributes)
+            let rightAxisLabelX = graphOffsetX + graphWidth - rightAxisLabelSize.width - 5
+            let rightAxisLabelY = y - rightAxisLabelSize.height / 2
+            let rightAxisLabelPoint = CGPoint(x: rightAxisLabelX, y: rightAxisLabelY)
+            rightAxisLabelString.draw(at: rightAxisLabelPoint, withAttributes: attributes)
         }
         path.stroke()
     }
@@ -236,5 +256,11 @@ class LineChartView: UIView {
             path.addLine(to: CGPoint(x: x, y: graphOffsetY + graphHeight))
         }
         path.stroke()
+    }
+    
+    private func drawText(_ text: String, point: CGPoint) {
+        let nsString = text as NSString
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: BAFontSize.medium)]
+        let size = nsString.size(withAttributes: attributes)
     }
 }
