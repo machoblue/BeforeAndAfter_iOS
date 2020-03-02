@@ -66,12 +66,12 @@ class LineChartView: UIView {
         
         calculateYAxisRange()
         calculateXAxisRange()
+
+        drawWeightChart(rect: rect)
+        drawFatPercentChart(rect: rect)
         
         drawHorizontalLines(rect: rect)
         drawVerticalLines(rect: rect)
-        
-        drawWeightChart(rect: rect)
-        drawFatPercentChart(rect: rect)
     }
 
     private func drawChartFrame(rect: CGRect) {
@@ -116,7 +116,7 @@ class LineChartView: UIView {
     private func drawWeightChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.red.withAlphaComponent(0.5).set()
+        UIColor.red.set()
         
         let filteredRecords = records.filter { $0.weight ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
@@ -162,7 +162,7 @@ class LineChartView: UIView {
     private func drawFatPercentChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.blue.withAlphaComponent(0.5).set()
+        UIColor.blue.set()
         
         let filteredRecords = records.filter { $0.fatPercent ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
@@ -207,11 +207,11 @@ class LineChartView: UIView {
     
     private func drawHorizontalLines(rect: CGRect) {
         let path = UIBezierPath()
-        UIColor.lightGray.set()
+        UIColor.lightGray.withAlphaComponent(0.5).set()
         
         let attributes = [
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: BAFontSize.medium),
-            NSAttributedString.Key.foregroundColor: UIColor.gray,
+            NSAttributedString.Key.foregroundColor: UIColor.gray.withAlphaComponent(0.5),
         ]
         
         for i in 1..<Int(weightUpperLimit - weightLowerLimit) {
@@ -238,7 +238,21 @@ class LineChartView: UIView {
     
     private func drawVerticalLines(rect: CGRect) {
         let path = UIBezierPath()
-        UIColor.lightGray.set()
+        UIColor.lightGray.withAlphaComponent(0.5).set()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = mode.format
+        
+        // calculate textSize
+        let widthOfSpaceToPlaceXAxisLabel = graphWidth / CGFloat((toTime - fromTime) / mode.unitTime)
+        let leftAndRightMargin = CGFloat(5)
+        let fontHeightToWidthRatio = CGFloat(2) // 半角数字は縦：横＝2:1という想定
+        let fontSize = (widthOfSpaceToPlaceXAxisLabel - leftAndRightMargin) / CGFloat(mode.labelMaxLength) * fontHeightToWidthRatio
+        
+        let attributes = [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
+            NSAttributedString.Key.foregroundColor: UIColor.gray.withAlphaComponent(0.5),
+        ]
 
         let calendar = Calendar(identifier: .gregorian)
         calendar.enumerateDates(startingAfter: Date(timeIntervalSince1970: fromTime), matching: mode.components, matchingPolicy: .nextTime) { (date, matches, stop) in
@@ -254,13 +268,14 @@ class LineChartView: UIView {
             let x = graphOffsetX + graphWidth * CGFloat((date.timeIntervalSince1970 - fromTime) / (toTime - fromTime))
             path.move(to: CGPoint(x: x, y: graphOffsetY))
             path.addLine(to: CGPoint(x: x, y: graphOffsetY + graphHeight))
+            
+            let xAxisLabelString = dateFormatter.string(from: date) as NSString
+            let xAxisLabelX = x + 2
+            let xAxisLabelY = graphOffsetY + graphHeight + 5
+            let xAxisLabelPoint = CGPoint(x: xAxisLabelX, y: xAxisLabelY)
+            xAxisLabelString.draw(at: xAxisLabelPoint, withAttributes: attributes)
         }
         path.stroke()
     }
     
-    private func drawText(_ text: String, point: CGPoint) {
-        let nsString = text as NSString
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: BAFontSize.medium)]
-        let size = nsString.size(withAttributes: attributes)
-    }
 }

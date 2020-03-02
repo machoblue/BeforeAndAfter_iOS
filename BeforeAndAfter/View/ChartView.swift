@@ -54,6 +54,39 @@ enum ChartRange: Int, CaseIterable, Identifiable {
         }
         return components
     }
+    
+    var unitTime: TimeInterval {
+        switch self {
+        case .threeWeeks:
+            return 60 * 60 * 24
+        case .threeMonths:
+            return 60 * 60 * 24 * 7
+        case .oneYear:
+            return 60 * 60 * 30 // 本当はひと月なので、30とは限らない。ただ、最右のx軸のラベルが収まるかどうかに使うだけなのでアバウトでOK
+        }
+    }
+    
+    var format: String {
+        switch self {
+        case .threeWeeks:
+            return "d"
+        case .threeMonths:
+            return "M/d"
+        case .oneYear:
+            return "MMM"
+        }
+    }
+    
+    var labelMaxLength: Int {
+        switch self {
+        case .threeWeeks:
+            return 2
+        case .threeMonths:
+            return 5
+        case .oneYear:
+            return 2
+        }
+    }
 }
 
 struct ChartView: View {
