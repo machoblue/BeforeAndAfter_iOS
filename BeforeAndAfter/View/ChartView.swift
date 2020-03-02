@@ -66,14 +66,19 @@ struct ChartView: View {
     }
     
     var body: some View {
-        VStack {
-            Picker("Mode", selection: $mode) {
-                ForEach(ChartRange.allCases) { mode in
-                    Text(mode.title).tag(mode)
+        NavigationView {
+            VStack {
+                Picker("Mode", selection: $mode) {
+                    ForEach(ChartRange.allCases) { mode in
+                        Text(mode.title).tag(mode)
+                    }
                 }
-            }.pickerStyle(SegmentedPickerStyle())
-//            TwoScaleLineGraph(mode: $mode, records: $viewModel.records)
-            LineChart(mode: $mode, records: $viewModel.records)
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(EdgeInsets(top: BAMargin.medium, leading: BAMargin.medium, bottom: 0, trailing: BAMargin.medium))
+            
+                LineChart(mode: $mode, records: $viewModel.records)
+            }
+            .navigationBarTitle("Chart", displayMode: .inline)
         }
         .onAppear {
             self.viewModel.apply(.onAppear)
