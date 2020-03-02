@@ -68,6 +68,7 @@ class LineChartView: UIView {
         calculateXAxisRange()
         
         drawHorizontalLines(rect: rect)
+        drawVerticalLines(rect: rect)
         
         drawWeightChart(rect: rect)
         drawFatPercentChart(rect: rect)
@@ -209,9 +210,30 @@ class LineChartView: UIView {
         UIColor.lightGray.set()
         for i in 1..<Int(weightUpperLimit - weightLowerLimit) {
             let y = graphOffsetY + graphHeight - graphHeight * CGFloat(Float(i) / (weightUpperLimit - weightLowerLimit))
-            print(graphOffsetY, graphWidth, y)
             path.move(to: CGPoint(x: graphOffsetX, y: y))
             path.addLine(to: CGPoint(x: graphOffsetX + graphWidth, y: y))
+        }
+        path.stroke()
+    }
+    
+    private func drawVerticalLines(rect: CGRect) {
+        let path = UIBezierPath()
+        UIColor.lightGray.set()
+
+        let calendar = Calendar(identifier: .gregorian)
+        calendar.enumerateDates(startingAfter: Date(timeIntervalSince1970: fromTime), matching: mode.components, matchingPolicy: .nextTime) { (date, matches, stop) in
+            guard
+                let date = date,
+                date.timeIntervalSince1970 <= toTime//,
+//                matches
+            else {
+                stop = true
+                return
+            }
+            
+            let x = graphOffsetX + graphWidth * CGFloat((date.timeIntervalSince1970 - fromTime) / (toTime - fromTime))
+            path.move(to: CGPoint(x: x, y: graphOffsetY))
+            path.addLine(to: CGPoint(x: x, y: graphOffsetY + graphHeight))
         }
         path.stroke()
     }

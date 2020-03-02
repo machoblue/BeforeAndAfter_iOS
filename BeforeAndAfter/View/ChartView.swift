@@ -37,6 +37,24 @@ enum ChartRange: Int, CaseIterable, Identifiable {
             return 60 * 60 * 24 * 365
         }
     }
+    
+    var components: DateComponents {
+        var components = DateComponents()
+        components.nanosecond = 0
+        components.second = 0
+        components.minute = 0
+        components.hour = 0
+        switch self {
+        case .threeWeeks:
+            break
+        case .threeMonths:
+            components.weekday = 1
+        case .oneYear:
+            components.weekday = 1
+//            components.weekOfMonth = 1
+        }
+        return components
+    }
 }
 
 struct ChartView: View {
