@@ -50,8 +50,7 @@ enum ChartRange: Int, CaseIterable, Identifiable {
         case .threeMonths:
             components.weekday = 1
         case .oneYear:
-            components.weekday = 1
-//            components.weekOfMonth = 1
+            components.day = 1
         }
         return components
     }
