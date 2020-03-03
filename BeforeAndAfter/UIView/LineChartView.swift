@@ -21,6 +21,7 @@ class LineChartView: UIView {
     var graphHeight: CGFloat = 0
     var graphOffsetX: CGFloat = 0
     var graphOffsetY: CGFloat = 0
+    var legendsHeight: CGFloat = 0
 
     // YAxis range
     var weightLowerLimit: Float = 0
@@ -56,11 +57,12 @@ class LineChartView: UIView {
     override func draw(_ rect: CGRect) {
         width = rect.width
         height = rect.height
-        let xAxisLabelHeight = height * 0.05
+        legendsHeight = (height - marginTop - marginBottom) * 0.05
+        let xAxisLabelHeight = (height - marginTop - marginBottom) * 0.05
         graphOffsetX = self.marginLeading
-        graphOffsetY = self.marginTop
+        graphOffsetY = self.marginTop + legendsHeight
         graphWidth = width - (self.marginLeading + self.marginTrailing)
-        graphHeight = height - (xAxisLabelHeight + self.marginTop + self.marginBottom)
+        graphHeight = height - (self.marginTop + legendsHeight + xAxisLabelHeight + self.marginBottom)
         
         drawChartFrame(rect: rect)
         
@@ -72,6 +74,8 @@ class LineChartView: UIView {
         
         drawHorizontalLines(rect: rect)
         drawVerticalLines(rect: rect)
+        
+        drawLegends(rect: rect)
     }
 
     private func drawChartFrame(rect: CGRect) {
@@ -245,13 +249,13 @@ class LineChartView: UIView {
         
         // calculate textSize
         let widthOfSpaceToPlaceXAxisLabel = graphWidth / CGFloat((toTime - fromTime) / mode.unitTime)
-        let leftAndRightMargin = CGFloat(5)
-        let fontHeightToWidthRatio = CGFloat(2) // 半角数字は縦：横＝2:1という想定
+        let leftAndRightMargin: CGFloat = 5
+        let fontHeightToWidthRatio: CGFloat = 2 // 半角数字は縦：横＝2:1という想定
         let fontSize = (widthOfSpaceToPlaceXAxisLabel - leftAndRightMargin) / CGFloat(mode.labelMaxLength) * fontHeightToWidthRatio
         
         let attributes = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
-            NSAttributedString.Key.foregroundColor: UIColor.gray.withAlphaComponent(0.5),
+            NSAttributedString.Key.foregroundColor: UIColor.gray.withAlphaComponent(0.8),
         ]
 
         let calendar = Calendar(identifier: .gregorian)
@@ -269,6 +273,10 @@ class LineChartView: UIView {
             path.move(to: CGPoint(x: x, y: graphOffsetY))
             path.addLine(to: CGPoint(x: x, y: graphOffsetY + graphHeight))
             
+            // draw label
+            let nextTime = date.timeIntervalSince1970 + mode.unitTime
+            guard nextTime < toTime else { return }
+            
             let xAxisLabelString = dateFormatter.string(from: date) as NSString
             let xAxisLabelX = x + 2
             let xAxisLabelY = graphOffsetY + graphHeight + 5
@@ -276,6 +284,46 @@ class LineChartView: UIView {
             xAxisLabelString.draw(at: xAxisLabelPoint, withAttributes: attributes)
         }
         path.stroke()
+    }
+    
+    private func drawLegends(rect: CGRect) {
+        let bottomMargin: CGFloat = 6
+        let leftMargin: CGFloat = 3
+        let fontSize = BAFontSize.small
+        
+        let bezierPath = UIBezierPath()
+        UIColor.red.set()
+        let radius = fontSize / 2
+        var x = graphOffsetX + leftMargin
+        let centerX = x + radius
+        let y = graphOffsetY - (bottomMargin + fontSize)
+        let centerY = y + radius
+        let center = CGPoint(x: centerX, y: centerY)
+        bezierPath.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+        bezierPath.fill()
+        
+        let font = UIFont.systemFont(ofSize: fontSize)
+        let attributes = [
+            NSAttributedString.Key.font: font,
+            NSAttributedString.Key.foregroundColor: UIColor.gray,
+        ]
+        let weightLabel = ":Weight" as NSString
+        x += radius * 2 + leftMargin
+        let weightLabelPoint = CGPoint(x: x, y: y)
+        weightLabel.draw(at: weightLabelPoint, withAttributes: attributes)
+        
+        let bezierPath2 = UIBezierPath()
+        UIColor.blue.set()
+        x += weightLabel.size(withAttributes: attributes).width + leftMargin * 2
+        let centerX2 = x + radius
+        let center2 = CGPoint(x: centerX2, y: centerY)
+        bezierPath2.addArc(withCenter: center2, radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
+        bezierPath2.fill()
+        
+        let fatPercentLabel = ":Fat Percent" as NSString
+        x += radius * 2 + leftMargin
+        let fatPercentLabelPoint = CGPoint(x: x, y: y)
+        fatPercentLabel.draw(at: fatPercentLabelPoint, withAttributes: attributes)
     }
     
 }

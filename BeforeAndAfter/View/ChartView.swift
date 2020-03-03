@@ -62,7 +62,7 @@ enum ChartRange: Int, CaseIterable, Identifiable {
         case .threeMonths:
             return 60 * 60 * 24 * 7
         case .oneYear:
-            return 60 * 60 * 30 // 本当はひと月なので、30とは限らない。ただ、最右のx軸のラベルが収まるかどうかに使うだけなのでアバウトでOK
+            return 60 * 60 * 24 * 30 // 本当はひと月なので、30とは限らない。ただ、最右のx軸のラベルが収まるかどうかに使うだけなのでアバウトでOK
         }
     }
     
@@ -84,7 +84,7 @@ enum ChartRange: Int, CaseIterable, Identifiable {
         case .threeMonths:
             return 5
         case .oneYear:
-            return 2
+            return 4 // May(Mは2文字分)
         }
     }
 }
