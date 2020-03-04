@@ -109,6 +109,13 @@ class LineChartView: UIView {
             weightLowerLimit = weightLowerLimit - Float(Int(fatPercentRange - weightRange) / 2)
             weightUpperLimit = weightLowerLimit + fatPercentRange
         }
+        
+        let minimumScaleNums: Float = 5
+        if weightUpperLimit - weightLowerLimit < minimumScaleNums {
+            let add = (weightUpperLimit - weightLowerLimit) - minimumScaleNums
+            weightLowerLimit += add
+            fatPercentLowerLimit += add
+        }
     }
     
     private func calculateXAxisRange() {
