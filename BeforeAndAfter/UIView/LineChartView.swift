@@ -120,13 +120,13 @@ class LineChartView: UIView {
     private func drawWeightChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.red.set()
+        UIColor.red.withAlphaComponent(0.8).set()
         
         let filteredRecords = records.filter { $0.weight ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
             guard let weight = record.weight else { return }
             let x = self.marginLeading + self.graphWidth * CGFloat((record.time - fromTime) / (toTime - fromTime))
-            let y = self.marginTop + self.graphHeight * CGFloat((self.weightUpperLimit - weight) / (self.weightUpperLimit - self.weightLowerLimit))
+            let y = self.graphOffsetY + self.graphHeight * CGFloat((self.weightUpperLimit - weight) / (self.weightUpperLimit - self.weightLowerLimit))
             let point = CGPoint(x: x, y: y)
             
             switch record.time {
@@ -140,7 +140,7 @@ class LineChartView: UIView {
                 }
                 
                 let weightAtFromTime: Float = weight + (nextWeight - weight) * Float((fromTime - record.time) / (nextRecord.time - record.time))
-                let y2 = self.marginTop + self.graphHeight * CGFloat((self.weightUpperLimit - weightAtFromTime) / (self.weightUpperLimit - self.weightLowerLimit))
+                let y2 = self.graphOffsetY + self.graphHeight * CGFloat((self.weightUpperLimit - weightAtFromTime) / (self.weightUpperLimit - self.weightLowerLimit))
                 let pointAtFromTime = CGPoint(x: graphOffsetX, y: y2)
                 lineChartPath.move(to: pointAtFromTime)
 
@@ -166,13 +166,13 @@ class LineChartView: UIView {
     private func drawFatPercentChart(rect: CGRect) {
         let lineChartPath = UIBezierPath()
         lineChartPath.lineWidth = 1.5
-        UIColor.blue.set()
+        UIColor.blue.withAlphaComponent(0.8).set()
         
         let filteredRecords = records.filter { $0.fatPercent ?? 0 > 0 }.sorted { $0.time < $1.time }
         for (index, record) in filteredRecords.enumerated() {
             guard let fatPercent = record.fatPercent else { return }
             let x = self.marginLeading + self.graphWidth * CGFloat((record.time - fromTime) / (toTime - fromTime))
-            let y = self.marginTop + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercent) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
+            let y = self.graphOffsetY + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercent) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
             let point = CGPoint(x: x, y: y)
             
             switch record.time {
@@ -186,7 +186,7 @@ class LineChartView: UIView {
                 }
                 
                 let fatPercentAtFromTime: Float = fatPercent + (nextFatPercent - fatPercent) * Float((fromTime - record.time) / (nextRecord.time - record.time))
-                let y2 = self.marginTop + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercentAtFromTime) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
+                let y2 = self.graphOffsetY + self.graphHeight * CGFloat((self.fatPercentUpperLimit - fatPercentAtFromTime) / (self.fatPercentUpperLimit - self.fatPercentLowerLimit))
                 let pointAtFromTime = CGPoint(x: graphOffsetX, y: y2)
                 lineChartPath.move(to: pointAtFromTime)
 
