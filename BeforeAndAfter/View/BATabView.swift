@@ -22,7 +22,14 @@ struct BATabView: View {
                     Image("show_chart-24px")
                         .renderingMode(.template)
                         .foregroundColor(.blue)
-                    Text("Graph")
+                    Text("Chart")
+            }
+            SettingsView()
+                .tabItem {
+                    Image("settings-24px")
+                        .renderingMode(.template)
+                        .foregroundColor(.blue)
+                    Text("Settings")
             }
         }
     }
