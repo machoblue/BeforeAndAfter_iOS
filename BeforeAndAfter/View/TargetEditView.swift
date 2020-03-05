@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TargetEditView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: TargetViewModel
     @State var weightTargetText: String = ""
     @State var fatPercentTargetText: String = ""
@@ -90,7 +91,7 @@ struct TargetEditView: View {
         .navigationBarTitle("Target")
         .navigationBarItems(trailing: Button(action: {
             self.viewModel.apply(.onSaveButtonTapped(weightTarget: self.viewModel.weightTarget, fatPercentTarget: self.viewModel.fatPercentTarget))
-            // TODO: close
+            self.presentationMode.wrappedValue.dismiss()
         }) {
             Text("Save")
         })
