@@ -9,9 +9,7 @@ import SwiftUI
 
 struct RecordFormView: View {
     @Binding var record: Record
-    @State var weightText: String = ""
-    @State var fatPercentText: String = ""
-    
+
     private let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 1

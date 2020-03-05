@@ -10,9 +10,7 @@ import SwiftUI
 struct TargetEditView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: TargetViewModel
-    @State var weightTargetText: String = ""
-    @State var fatPercentTargetText: String = ""
-    
+
     init(viewModel: TargetViewModel = TargetViewModel()) {
         self.viewModel = viewModel
     }
