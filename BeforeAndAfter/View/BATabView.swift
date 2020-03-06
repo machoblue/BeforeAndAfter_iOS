@@ -10,13 +10,13 @@ import SwiftUI
 struct BATabView: View {
     var body: some View {
         TabView {
-            HistoryView(viewModel: HistoryViewModel(recordRepository: RecordRepository()))
+            HomeView()
                 .tabItem {
-                    Image("history-24px")
+                    Image("home-24px")
                         .renderingMode(.template)
                         .foregroundColor(.blue)
-                    Text("History")
-                }
+                    Text("Home")
+            }
             ChartView()
                 .tabItem {
                     Image("show_chart-24px")
@@ -24,6 +24,13 @@ struct BATabView: View {
                         .foregroundColor(.blue)
                     Text("Chart")
             }
+            HistoryView(viewModel: HistoryViewModel(recordRepository: RecordRepository()))
+                .tabItem {
+                    Image("history-24px")
+                        .renderingMode(.template)
+                        .foregroundColor(.blue)
+                    Text("History")
+                }
             SettingsView()
                 .tabItem {
                     Image("settings-24px")
