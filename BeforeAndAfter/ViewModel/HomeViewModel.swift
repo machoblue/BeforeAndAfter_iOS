@@ -29,20 +29,6 @@ class HomeViewModel: ObservableObject {
     @Published var countOfElapsedDay: Int = 0
     @Published var countOfDayKeepRecording: Int = 0
     
-    @Published var latestWeight: Float = 0
-    @Published var firstWeight: Float = 0
-    @Published var targetWeight: Float = 0
-    @Published var bestWeight: Float = 0
-    @Published var lostWeight: Float = 0
-    @Published var remainingWeight: Float = 0
-    
-    @Published var latestFatPercent: Float = 0
-    @Published var firstFatPercent: Float = 0
-    @Published var targetFatPercent: Float = 0
-    @Published var bestFatPercent: Float = 0
-    @Published var lostFatPercent: Float = 0
-    @Published var remainingFatPercent: Float = 0
-    
     @Published var weightSummary = Summary.empty()
     @Published var fatPercentSummary = Summary.empty()
     
@@ -80,6 +66,32 @@ class HomeViewModel: ObservableObject {
     }
     
     private func bindOutputs() {
+        
+        let countOfElapsedDayOutputStream = recordsSubject
+            .map { records in
+                guard records.count > 0 else { return 0 }
+                return Int((Date().timeIntervalSince1970 - (records.last?.time ?? 0)) / Double(60 * 60 * 24))
+            }
+            .assign(to: \.countOfElapsedDay, on: self)
+        
+        let countOfDayKeepRecordingOutputStream = recordsSubject
+            .map { records in
+                var count = 0
+                var currentDate = Date()
+                let calendar = Calendar(identifier: .gregorian)
+                for record in records {
+                    let oneDayAgo = calendar.startOfDay(for: currentDate).timeIntervalSince1970 - 60 * 60 * 24
+                    currentDate = Date(timeIntervalSince1970: record.time)
+                    if currentDate.timeIntervalSince1970 > oneDayAgo {
+                        count += 1
+                    } else {
+                        break
+                    }
+                }
+                return count
+            }
+            .assign(to: \.countOfDayKeepRecording, on: self)
+        
         let recordsAndTarget = recordsSubject.combineLatest(targetSubject)
         
         let weightOutputStream = recordsAndTarget
@@ -91,8 +103,8 @@ class HomeViewModel: ObservableObject {
                 let first = records.last?.weight ?? 0
                 let targetValue = target.weightTarget ?? 0
                 let best = records.sorted { ($0.weight ?? 0) < ($1.weight ?? 0) }.first?.weight ?? 0
-                let lost = latest - first
-                let remaining = targetValue - latest
+                let lost = first - latest
+                let remaining = latest - targetValue
                 
                 return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining)
             }
@@ -107,14 +119,14 @@ class HomeViewModel: ObservableObject {
                 let first = records.last?.fatPercent ?? 0
                 let targetValue = target.fatPercentTarget ?? 0
                 let best = records.sorted { ($0.fatPercent ?? 0) < ($1.fatPercent ?? 0) }.first?.fatPercent ?? 0
-                let lost = latest - first
-                let remaining = targetValue - latest
+                let lost = first - latest
+                let remaining = latest - targetValue
 
                 return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining)
             }
             .assign(to: \.fatPercentSummary, on: self)
 
-        cancellables += [weightOutputStream, fatPercentOutputStream]
+        cancellables += [countOfElapsedDayOutputStream, countOfDayKeepRecordingOutputStream, weightOutputStream, fatPercentOutputStream]
     }
 }
 
