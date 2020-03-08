@@ -125,7 +125,7 @@ struct HomeView: View {
                 Spacer()
                     .frame(width: 1, height: 8)
                 
-                Text("始めたときから\(summary.comparisonToLastTime, specifier: "%.2f")\(suffix)減りました。")
+                Text("始めたときから\(summary.lost, specifier: "%.2f")\(suffix)減りました。")
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
