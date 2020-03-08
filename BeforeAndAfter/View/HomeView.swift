@@ -20,7 +20,7 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Spacer(minLength: 24)
+                    Spacer(minLength: 36)
                     
                     Text(String(format: "はじめてから%d日目", viewModel.countOfElapsedDay as Int))
                         .font(.system(size: BAFontSize.small))
@@ -175,7 +175,7 @@ struct HomeView: View {
                         HStack {
                             Rectangle()
                                 .fill(Color.gray)
-                                .frame(width: geometry.size.width * CGFloat((self.best - self.first) / (self.target - self.first)), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat((self.best - self.first) / (self.target - self.first + 0.001)), height: geometry.size.height)
                             Spacer()
                         }
                         
@@ -183,7 +183,7 @@ struct HomeView: View {
                         HStack {
                             Rectangle()
                                 .fill(Color.blue)
-                                .frame(width: geometry.size.width * CGFloat((self.latest - self.first) / (self.target - self.first)), height: geometry.size.height)
+                                .frame(width: geometry.size.width * CGFloat((self.latest - self.first) / (self.target - self.first + 0.001)), height: geometry.size.height)
                             Spacer()
                         }
                     }
