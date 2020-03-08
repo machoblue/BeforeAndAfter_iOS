@@ -10,6 +10,7 @@ import UIKit
 
 struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
+    @State var showEditAdd = false
     
     init(viewModel: HomeViewModel = HomeViewModel()) {
         self.viewModel = viewModel
@@ -38,6 +39,16 @@ struct HomeView: View {
                 }
             }
             .navigationBarTitle("Home", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                    self.showEditAdd.toggle()
+                }) {
+                    Text("Add")
+                }.sheet(isPresented: $showEditAdd) {
+                    AddRecordView(record: Record(time: Date().timeIntervalSince1970, weight: UserDefaults.latestWeight, fatPercent: UserDefaults.latestFatPercent),
+                                  viewModel: EditAddRecordViewModel())
+                }
+            )
         }
         .onAppear() {
             self.viewModel.apply(.onAppear)
