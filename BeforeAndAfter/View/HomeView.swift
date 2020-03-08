@@ -76,9 +76,9 @@ struct HomeView: View {
         var suffix: String
         var body: some View {
             VStack {
-                Text("\(summary.latest)\(suffix)")
+                Text("\(summary.latest, specifier: "%.2f")\(suffix)")
                     .font(.system(size: BAFontSize.xLarge))
-                Text("(前回比: \(summary.comparisonToLastTime)\(suffix))")
+                Text("(前回比: \(summary.comparisonToLastTime, specifier: "%.2f")\(suffix))")
                     .font(.system(size: BAFontSize.small))
                 
                 Spacer(minLength: 24)
@@ -88,7 +88,7 @@ struct HomeView: View {
                         VStack {
                             Text("開始時")
                                 .font(.system(size: BAFontSize.small))
-                            Text("\(self.summary.first)kg")
+                            Text("\(self.summary.first, specifier: "%.2f")kg")
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                         
@@ -98,7 +98,7 @@ struct HomeView: View {
                         VStack {
                             Text("目標")
                                 .font(.system(size: BAFontSize.small))
-                            Text("\(self.summary.target)kg")
+                            Text("\(self.summary.target, specifier: "%.2f")kg")
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                     }
@@ -125,12 +125,12 @@ struct HomeView: View {
                 Spacer()
                     .frame(width: 1, height: 8)
                 
-                Text("始めたときから\(summary.comparisonToLastTime)\(suffix)減りました。")
+                Text("始めたときから\(summary.comparisonToLastTime, specifier: "%.2f")\(suffix)減りました。")
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
 
-                Text("あと\(summary.remainig)\(suffix)です。")
+                Text("あと\(summary.remainig, specifier: "%.2f")\(suffix)です。")
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
