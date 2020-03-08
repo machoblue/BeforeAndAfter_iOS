@@ -78,8 +78,15 @@ struct HomeView: View {
             VStack {
                 Text("\(summary.latest, specifier: "%.2f")\(suffix)")
                     .font(.system(size: BAFontSize.xLarge))
-                Text("(前回比: \(summary.comparisonToLastTime, specifier: "%.2f")\(suffix))")
-                    .font(.system(size: BAFontSize.small))
+                HStack {
+                    Text("(前回比: ")
+                        .font(.system(size: BAFontSize.small))
+                    Text("\(summary.comparisonToLastTime == 0 ? "" : summary.comparisonToLastTime > 0 ? "+" : "-")\(abs(summary.comparisonToLastTime), specifier: "%.2f")\(suffix)")
+                        .font(.system(size: BAFontSize.small))
+                        .foregroundColor(summary.comparisonToLastTime == 0 ? .black : summary.comparisonToLastTime > 0 ? .red : .green)
+                    Text(")")
+                        .font(.system(size: BAFontSize.small))
+                }
                 
                 Spacer(minLength: 24)
                 
@@ -88,7 +95,7 @@ struct HomeView: View {
                         VStack {
                             Text("開始時")
                                 .font(.system(size: BAFontSize.small))
-                            Text("\(self.summary.first, specifier: "%.2f")kg")
+                            Text("\(self.summary.first, specifier: "%.2f")\(self.suffix)")
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                         
@@ -98,11 +105,12 @@ struct HomeView: View {
                         VStack {
                             Text("目標")
                                 .font(.system(size: BAFontSize.small))
-                            Text("\(self.summary.target, specifier: "%.2f")kg")
+                            Text("\(self.summary.target, specifier: "%.2f")\(self.suffix)")
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                     }
                 }
+                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
 
                 Spacer()
                     .frame(width: 1, height: 18) // これがないと下の凡例が、上のindicatorに食い込む。なぜかわからない。
@@ -123,7 +131,7 @@ struct HomeView: View {
                 }
 
                 Spacer()
-                    .frame(width: 1, height: 8)
+                    .frame(width: 1, height: 24)
                 
                 Text("始めたときから\(summary.lost, specifier: "%.2f")\(suffix)減りました。")
                     .lineLimit(nil)
