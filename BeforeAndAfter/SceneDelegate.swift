@@ -19,13 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        // Create the SwiftUI view that provides the window contents.
-        let tabView = BATabView()
-
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: tabView)
+            window.rootViewController = UserDefaults.haveLaunchAppBefore ? UIHostingController(rootView: BATabView()) : UIHostingController(rootView: TargetView())
             self.window = window
             window.makeKeyAndVisible()
         }
