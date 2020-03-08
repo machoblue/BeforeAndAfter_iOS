@@ -106,7 +106,10 @@ class HomeViewModel: ObservableObject {
                 let lost = first - latest
                 let remaining = latest - targetValue
                 
-                return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining)
+                let secondLatest = records.count < 2 ? nil : records.suffix(from: 1).filter { ($0.weight ?? 0) > 0 }.first
+                let comparisonToLastTime = secondLatest == nil ? 0 : (latest - (secondLatest?.weight ?? 0))
+
+                return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining, comparisonToLastTime: comparisonToLastTime)
             }
             .assign(to: \.weightSummary, on: self)
             
@@ -121,8 +124,11 @@ class HomeViewModel: ObservableObject {
                 let best = records.sorted { ($0.fatPercent ?? 0) < ($1.fatPercent ?? 0) }.first?.fatPercent ?? 0
                 let lost = first - latest
                 let remaining = latest - targetValue
+                
+                let secondLatest = records.count < 2 ? nil : records.suffix(from: 1).filter { ($0.fatPercent ?? 0) > 0 }.first
+                let comparisonToLastTime = secondLatest == nil ? 0 : (latest - (secondLatest?.fatPercent ?? 0))
 
-                return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining)
+                return Summary(latest: latest, first: first, target: targetValue, best: best, lost: lost, remainig: remaining, comparisonToLastTime: comparisonToLastTime)
             }
             .assign(to: \.fatPercentSummary, on: self)
 
@@ -137,8 +143,9 @@ struct Summary {
     let best: Float
     let lost: Float
     let remainig: Float
+    let comparisonToLastTime: Float
     
     static func empty() -> Summary {
-        return Summary(latest: 0, first: 0, target: 0, best: 0, lost: 0, remainig: 0)
+        return Summary(latest: 0, first: 0, target: 0, best: 0, lost: 0, remainig: 0, comparisonToLastTime: 0)
     }
 }
