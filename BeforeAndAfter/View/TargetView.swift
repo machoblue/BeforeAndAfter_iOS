@@ -53,6 +53,13 @@ struct TargetView: View {
             .accentColor(.white)
             .background(Color.blue)
             .cornerRadius(8)
+
+            Button(action: {
+                
+            }) {
+                Text("スキップ")
+            }
+            .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
         }
         .padding(EdgeInsets(top: 0, leading: 36, bottom: 0, trailing: 36))
     }
