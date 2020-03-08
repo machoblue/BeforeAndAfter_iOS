@@ -22,9 +22,9 @@ struct HomeView: View {
                 VStack {
                     Spacer(minLength: 24)
                     
-                    Text("はじめてから\(viewModel.countOfElapsedDay)日目")
+                    Text(String(format: "はじめてから%d日目", viewModel.countOfElapsedDay as Int))
                         .font(.system(size: BAFontSize.small))
-                    Text("\(viewModel.countOfDayKeepRecording)日間 継続中!")
+                    Text(String(format: "%d日間 継続中!", viewModel.countOfDayKeepRecording as Int))
                         .font(.system(size: BAFontSize.large))
     
                     Spacer(minLength: 24)
@@ -144,12 +144,12 @@ struct HomeView: View {
                 Spacer()
                     .frame(width: 1, height: 24)
                 
-                Text("始めたときから\(summary.lost, specifier: "%.2f")\(suffix)減りました。")
+                Text(String(format: "始めたときから%.2f%@減りました。", summary.lost as Float, suffix as String))
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
 
-                Text("あと\(summary.remainig, specifier: "%.2f")\(suffix)です。")
+                Text(String(format: "あと%.2f%@です。", summary.remainig as Float, suffix as String))
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
@@ -199,7 +199,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-//        HomeView.Indicator(first: Float(75.0), target: Float(65.0), latest: Float(73.0), best: Float(72.5))
     }
     
 }
