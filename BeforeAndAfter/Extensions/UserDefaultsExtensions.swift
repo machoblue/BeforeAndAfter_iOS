@@ -11,6 +11,7 @@ extension UserDefaults {
     private static var latestWeightKey = "latestWeight"
     private static var latestFatPercentKey = "latestFatPercent"
     private static var graphDisplayModeKey = "graphDisplayMode"
+    private static var haveLaunchAppBeforeKey = "haveLaunchAppBefore"
 
     static var latestWeight: Float? {
         get {
@@ -43,6 +44,15 @@ extension UserDefaults {
         set {
             UserDefaults.standard.set(newValue, forKey: graphDisplayModeKey)
             UserDefaults.standard.synchronize()
+        }
+    }
+    
+    static var haveLaunchAppBefore: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: haveLaunchAppBeforeKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: haveLaunchAppBeforeKey)
         }
     }
 }
