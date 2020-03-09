@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BATabView: View {
+    @State var presentTutorial = false
     var body: some View {
         TabView {
             HomeView()
@@ -39,6 +40,10 @@ struct BATabView: View {
                     Text("Settings")
             }
         }
+        .onAppear() {
+            self.presentTutorial = !UserDefaults.haveLaunchAppBefore
+        }
+        .overlay(presentTutorial ? TutorialView(presentTutorial: $presentTutorial) : nil)
     }
 }
 

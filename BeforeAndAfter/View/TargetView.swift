@@ -45,7 +45,6 @@ struct TargetView: View {
 
             Button(action: {
                 self.viewModel.apply(.onSaveButtonTapped(weightTarget: Float(self.weightTarget) ?? 0, fatPercentTarget: Float(self.fatPercentTarget) ?? 0))
-                UserDefaults.haveLaunchAppBefore = true
                 self.presentTabView = true
             }) {
                 HStack {
@@ -60,7 +59,6 @@ struct TargetView: View {
             .cornerRadius(8)
 
             Button(action: {
-                UserDefaults.haveLaunchAppBefore = true
                 self.presentTabView = true
             }) {
                 Text("スキップ")
