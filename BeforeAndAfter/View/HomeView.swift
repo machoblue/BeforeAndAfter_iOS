@@ -36,6 +36,8 @@ struct HomeView: View {
     
                     Separator(title: "体脂肪率")
                     SummaryView(summary: $viewModel.fatPercentSummary, suffix: "%")
+                    
+                    Spacer(minLength: 48)
                 }
             }
             .navigationBarTitle("Home", displayMode: .inline)
