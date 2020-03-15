@@ -109,6 +109,7 @@ struct HomeView: View {
                             Text("開始時")
                                 .font(.system(size: BAFontSize.small))
                             Text("\(self.summary.first, specifier: "%.2f")\(self.suffix)")
+                                .font(.system(size: BAFontSize.medium))
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                         
@@ -119,6 +120,7 @@ struct HomeView: View {
                             Text("目標")
                                 .font(.system(size: BAFontSize.small))
                             Text("\(self.summary.target, specifier: "%.2f")\(self.suffix)")
+                                .font(.system(size: BAFontSize.medium))
                         }
                         .frame(width: geometry.size.width / 6, height: geometry.size.height)
                     }
