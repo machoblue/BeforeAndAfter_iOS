@@ -23,3 +23,7 @@ struct BAMargin {
     static let large: CGFloat = 20
     static let xLarge: CGFloat = 24
 }
+
+struct BAColor {
+    static let navigationBarBackground: UIColor = #colorLiteral(red: 0.9763854146, green: 0.9765252471, blue: 0.9763546586, alpha: 1)
+}
