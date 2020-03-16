@@ -9,74 +9,72 @@ import SwiftUI
 
 struct RecordFormView: View {
     @Binding var record: Record
-
-    private let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 1
-        return formatter
-    } ()
-
-    // workaround for SwiftUI's decmail format issue
-    // https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working
-    var weightProxy: Binding<String> {
+    
+    @State var weightText: String = ""
+    @State var fatPercentText: String = ""
+    
+    var weightBinding: Binding<String> {
         Binding<String>(
             get: {
-                if let weight = self.record.weight {
-                    return String(format: "%.02f", weight)
-                } else {
-                    return ""
-                }
+                self.weightText
             },
             set: {
-                if let value = NumberFormatter().number(from: $0) {
-                    self.record.weight = value.floatValue
-                }
+                self.weightText = $0
+                self.record.weight = Float(self.weightText) ?? 0
             }
         )
     }
-    
-    var fatPercentProxy: Binding<String> {
+
+    var fatPercentBinding: Binding<String> {
         Binding<String>(
             get: {
-                if let fatPercent = self.record.fatPercent {
-                    return String(format: "%.02f", fatPercent)
-                } else {
-                    return ""
-                }
+                self.fatPercentText
             },
             set: {
-                if let value = NumberFormatter().number(from: $0) {
-                    self.record.fatPercent = value.floatValue
-                }
+                self.fatPercentText = $0
+                self.record.fatPercent = Float(self.fatPercentText) ?? 0
             }
         )
     }
-    
+
     var body: some View {
         List {
             Section(header: Text("Weight(kg)")) {
                 HStack {
+                    TextField("Enter your weight in kg.", text: weightBinding)
+                        .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
-                        self.record.weight = (self.record.weight ?? 0) + 0.1
+                        let currentValue = Float(self.weightText) ?? 0
+                        let newValue = currentValue + 0.1
+                        self.record.weight = newValue
+                        self.weightText = String(format: "%.2f", newValue)
                     }, onDecrement: {
-                        self.record.weight = (self.record.weight ?? 0) - 0.1
+                        let currentValue = Float(self.weightText) ?? 0
+                        let newValue = currentValue - 0.1
+                        self.record.weight = newValue
+                        self.weightText = String(format: "%.2f", newValue)
                     }) {
-//                        TextField("Enter your weight in kg.", value: $record.weight, formatter: numberFormatter)
-                        TextField("Enter your weight in kg.", text: weightProxy)
-                            .keyboardType(.decimalPad)
+                        Text("") // ダミー。TextFieldをここにおくべきだが、変な動作をするので、外に出した。
                     }
                 }
             }
             
             Section(header: Text("Fat Percent")) {
                 HStack {
+                    TextField("Enter your fat percent.", text: fatPercentBinding)
+                        .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
-                        self.record.fatPercent = (self.record.fatPercent ?? 0) + 0.1
+                        let currentValue = Float(self.fatPercentText) ?? 0
+                        let newValue = currentValue + 0.1
+                        self.record.fatPercent = newValue
+                        self.fatPercentText = String(format: "%.2f", newValue)
                     }, onDecrement: {
-                        self.record.fatPercent = (self.record.fatPercent ?? 0) - 0.1
+                        let currentValue = Float(self.fatPercentText) ?? 0
+                        let newValue = currentValue - 0.1
+                        self.record.fatPercent = newValue
+                        self.fatPercentText = String(format: "%.2f", newValue)
                     }) {
-                        TextField("Enter your fat percent.", text: fatPercentProxy)
-                            .keyboardType(.decimalPad)
+                        Text("")
                     }
                 }
             }
@@ -87,6 +85,10 @@ struct RecordFormView: View {
 
         }
         .listStyle(GroupedListStyle())
+        .onAppear() {
+            self.weightText = String(format: "%.2f", self.record.weight ?? 0)
+            self.fatPercentText = String(format: "%.2f", self.record.fatPercent ?? 0)
+        }
     }
 }
 
