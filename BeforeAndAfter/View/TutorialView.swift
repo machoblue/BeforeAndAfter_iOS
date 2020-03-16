@@ -17,7 +17,7 @@ struct TutorialView: View {
             ZStack {
                 RectangleWithCircle(circleRect: CGRect(x: geometry.size.width - 85, y: -10, width: self.diameter, height: self.diameter))
                     .fill(Color(UIColor.black.withAlphaComponent(0.7)), style: FillStyle(eoFill: true))
-                    .edgesIgnoringSafeArea(.top)
+                    .edgesIgnoringSafeArea([.top, .bottom])
                 .gesture(
                     TapGesture().onEnded {
                          UserDefaults.haveLaunchAppBefore = true
