@@ -15,72 +15,40 @@ struct TargetEditView: View {
         self.viewModel = viewModel
     }
     
-    private let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 1
-        return formatter
-    } ()
-
-    // workaround for SwiftUI's decmail format issue
-    // https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working
-    var weightProxy: Binding<String> {
-        Binding<String>(
-            get: {
-                if let weight = self.viewModel.weightTarget {
-                    return String(format: "%.02f", weight)
-                } else {
-                    return ""
-                }
-            },
-            set: {
-                if let value = NumberFormatter().number(from: $0) {
-                    self.viewModel.weightTarget = value.floatValue
-                }
-            }
-        )
-    }
-    
-    var fatPercentProxy: Binding<String> {
-        Binding<String>(
-            get: {
-                if let fatPercent = self.viewModel.fatPercentTarget {
-                    return String(format: "%.02f", fatPercent)
-                } else {
-                    return ""
-                }
-            },
-            set: {
-                if let value = NumberFormatter().number(from: $0) {
-                    self.viewModel.fatPercentTarget = value.floatValue
-                }
-            }
-        )
-    }
-    
     var body: some View {
         List {
             Section(header: Text("Weight Target (kg)")) {
                 HStack {
+                    TextField("Enter your weight in kg.", text: $viewModel.weightTargetText)
+                        .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
-                        self.viewModel.weightTarget = (self.viewModel.weightTarget ?? 0) + 0.1
+                        let currentValue = Float(self.viewModel.weightTargetText) ?? 0
+                        let newValue = currentValue + 0.1
+                        self.viewModel.weightTargetText = String(format: "%.2f", newValue)
                     }, onDecrement: {
-                        self.viewModel.weightTarget = (self.viewModel.weightTarget ?? 0) - 0.1
+                        let currentValue = Float(self.viewModel.fatPercentTargetText) ?? 0
+                        let newValue = currentValue - 0.1
+                        self.viewModel.fatPercentTargetText = String(format: "%.2f", newValue)
                     }) {
-                        TextField("Enter your weight in kg.", text: weightProxy)
-                            .keyboardType(.decimalPad)
+                        Text("")
                     }
                 }
             }
 
             Section(header: Text("Fat Percent Target")) {
                 HStack {
+                    TextField("Enter your fat percent.", text: $viewModel.fatPercentTargetText)
+                        .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
-                        self.viewModel.fatPercentTarget = (self.viewModel.fatPercentTarget ?? 0) + 0.1
+                        let currentValue = Float(self.viewModel.weightTargetText) ?? 0
+                        let newValue = currentValue + 0.1
+                        self.viewModel.weightTargetText = String(format: "%.2f", newValue)
                     }, onDecrement: {
-                        self.viewModel.fatPercentTarget = (self.viewModel.fatPercentTarget ?? 0) - 0.1
+                        let currentValue = Float(self.viewModel.fatPercentTargetText) ?? 0
+                        let newValue = currentValue - 0.1
+                        self.viewModel.fatPercentTargetText = String(format: "%.2f", newValue)
                     }) {
-                        TextField("Enter your fat percent.", text: fatPercentProxy)
-                            .keyboardType(.decimalPad)
+                        Text("")
                     }
                 }
             }
@@ -88,7 +56,7 @@ struct TargetEditView: View {
         .listStyle(GroupedListStyle())
         .navigationBarTitle("Target")
         .navigationBarItems(trailing: Button(action: {
-            self.viewModel.apply(.onSaveButtonTapped(weightTarget: self.viewModel.weightTarget, fatPercentTarget: self.viewModel.fatPercentTarget))
+            self.viewModel.apply(.onSaveButtonTapped(weightTarget: Float(self.viewModel.weightTargetText) ?? 0, fatPercentTarget: Float(self.viewModel.fatPercentTargetText) ?? 0))
             self.presentationMode.wrappedValue.dismiss()
         }) {
             Text("Save")

@@ -36,9 +36,8 @@ class TargetViewModel: ObservableObject {
     private var saveSubject = PassthroughSubject<Void, Never>()
     
     // MARK: -Output
-//    @Published var target = Target(weightTarget: nil, fatPercentTarget: nil)
-    @Published var weightTarget: Float? = nil
-    @Published var fatPercentTarget: Float? = nil
+    @Published var weightTargetText: String = ""
+    @Published var fatPercentTargetText: String = ""
     
     // Mark: - Other
     private var cancellables: [AnyCancellable] = []
@@ -68,11 +67,23 @@ class TargetViewModel: ObservableObject {
     
     private func bindOutputs() {
         let weightTargetOutputStream = targetSubject
-            .map { $0.weightTarget }
-            .assign(to: \.weightTarget, on: self)
+            .map { target in
+                if let weightTarget = target.weightTarget {
+                    return weightTarget == 0 ? "" : String(format: "%.2f", weightTarget)
+                } else {
+                    return ""
+                }
+            }
+            .assign(to: \.weightTargetText, on: self)
         let fatPercentTargetOutputStream = targetSubject
-            .map { $0.fatPercentTarget }
-            .assign(to: \.fatPercentTarget, on: self)
+            .map { target in
+                if let fatPercentTarget = target.fatPercentTarget {
+                    return fatPercentTarget == 0 ? "" : String(format: "%.2f", fatPercentTarget)
+                } else {
+                    return ""
+                }
+            }
+            .assign(to: \.fatPercentTargetText, on: self)
         cancellables += [weightTargetOutputStream, fatPercentTargetOutputStream]
     }
 }
