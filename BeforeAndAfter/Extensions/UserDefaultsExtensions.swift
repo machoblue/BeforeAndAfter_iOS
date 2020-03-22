@@ -12,6 +12,7 @@ extension UserDefaults {
     private static var latestFatPercentKey = "latestFatPercent"
     private static var graphDisplayModeKey = "graphDisplayMode"
     private static var haveLaunchAppBeforeKey = "haveLaunchAppBefore"
+    private static var reviewDialogCompletedKey = "reviewDialogCompleted"
 
     static var latestWeight: Float? {
         get {
@@ -53,6 +54,15 @@ extension UserDefaults {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: haveLaunchAppBeforeKey)
+        }
+    }
+    
+    static var reviewDialogCompleted: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: reviewDialogCompletedKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: reviewDialogCompletedKey)
         }
     }
 }

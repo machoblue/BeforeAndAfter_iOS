@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct AddRecordView: View {
     @State var record: Record
@@ -25,6 +26,7 @@ struct AddRecordView: View {
                     trailing: Button(action: {
                         self.viewModel.apply(.onSaveButtonTapped(record: self.record))
                         self.presentationMode.wrappedValue.dismiss()
+                        StoreReviewUtils.requestReviewIfNeeded()
                     }) {
                         Text("Save")
                     }
