@@ -5,3 +5,24 @@
   Created by 松島勇貴 on 2020/03/25.
   
 */
+
+"common_weight" = "Weight";
+"common_fat_percent" = "Fat Percent";
+"common_weight_placeholder" = "Weight(Optional)";
+"common_fat_percent_placeholder" = "Fat Percent(Optional)";
+"common_kg" = "kg";
+"common_percent" = "%";
+"common_save" = "Save";
+"common_skip" = "Skip";
+
+"intro_target_message_1" = "Thank you for installing this app.";
+"intro_target_message_2" = "First, please enter target weight and target fat percent.";
+"intro_target_weight_placeholder" = "Target Weight(Optional)";
+"intro_target_fat_percent_placeholder" = "Target Fat Percent(Optional)";
+
+"intro_tutorial_message" = "First, let's record your weight!";
+
+"tab_home" = "Home";
+"tab_chart" = "Chart";
+"tab_history" = "History";
+"tab_settings" = "Settings";

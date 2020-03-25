@@ -29,28 +29,28 @@ struct BATabView: View {
                         Image("home-24px")
                             .renderingMode(.template)
                             .foregroundColor(.blue)
-                        Text("Home")
+                        Text("tab_home".localized)
                 }
                 ChartView()
                     .tabItem {
                         Image("show_chart-24px")
                             .renderingMode(.template)
                             .foregroundColor(.blue)
-                        Text("Chart")
+                        Text("tab_chart".localized)
                 }
                 HistoryView(viewModel: HistoryViewModel(recordRepository: RecordRepository()))
                     .tabItem {
                         Image("history-24px")
                             .renderingMode(.template)
                             .foregroundColor(.blue)
-                        Text("History")
+                        Text("tab_history".localized)
                     }
                 SettingsView()
                     .tabItem {
                         Image("settings-24px")
                             .renderingMode(.template)
                             .foregroundColor(.blue)
-                        Text("Settings")
+                        Text("tab_settings".localized)
                 }
             }
             .onAppear() {

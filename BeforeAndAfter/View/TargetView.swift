@@ -20,23 +20,23 @@ struct TargetView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("インストールありがとうございます。")
-            Text("まず、目標を入力してください。")
+            Text("intro_target_message_1".localized)
+            Text("intro_target_message_2".localized)
                 .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
 
             HStack {
-                TextField("目標体重", text: $weightTarget)
+                TextField("intro_target_weight_placeholder".localized, text: $weightTarget)
                     .frame(width: 160)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("kg")
+                Text("common_kg".localized)
             }
             .padding(EdgeInsets(top: 48, leading: 0, bottom: 0, trailing: 0))
 
             HStack {
-                TextField("目標体脂肪率", text: $fatPercentTarget)
+                TextField("intro_target_fat_percent_placeholder".localized, text: $fatPercentTarget)
                     .frame(width: 160)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                Text("%")
+                Text("common_percent".localized)
             }
             .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
 
@@ -49,7 +49,7 @@ struct TargetView: View {
             }) {
                 HStack {
                     Spacer()
-                    Text("保存")
+                    Text("common_save".localized)
                     Spacer()
                 }
                 .padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
@@ -61,7 +61,7 @@ struct TargetView: View {
             Button(action: {
                 self.presentTabView = true
             }) {
-                Text("スキップ")
+                Text("common_skip".localized)
             }
             .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
             

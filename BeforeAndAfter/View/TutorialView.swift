@@ -28,7 +28,7 @@ struct TutorialView: View {
                 VStack {
                     Spacer()
                         .frame(height: 110)
-                    Text("まずは右上のボタンから、\nいまの体重を記録してみましょう！")
+                    Text("intro_tutorial_message".localized)
                         .font(.system(size: BAFontSize.large))
                         .frame(alignment: .center)
                         .padding(16)

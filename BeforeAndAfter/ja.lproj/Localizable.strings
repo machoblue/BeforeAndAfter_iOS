@@ -5,3 +5,25 @@
   Created by 松島勇貴 on 2020/03/25.
   
 */
+
+"common_weight" = "体重";
+"common_fat_percent" = "体脂肪率";
+"common_weight_placeholder" = "体重";
+"common_fat_percent_placeholder" = "体脂肪率(任意)";
+"common_kg" = "kg";
+"common_percent" = "%";
+"common_save" = "保存";
+"common_skip" = "スキップ";
+
+"intro_target_message_1" = "インストールありがとうございます。";
+"intro_target_message_2" = "まず、目標を入力してください。";
+"intro_target_weight_placeholder" = "目標体重";
+"intro_target_fat_percent_placeholder" = "目標体脂肪率(任意)";
+
+"intro_tutorial_message" = "まずは右上のボタンから、\nいまの体重を記録してみましょう！";
+
+"tab_home" = "ホーム";
+"tab_chart" = "グラフ";
+"tab_history" = "履歴";
+"tab_settings" = "設定";
+
