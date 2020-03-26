@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   BeforeAndAfter
 
@@ -14,6 +14,8 @@
 "common_percent" = "%";
 "common_save" = "Save";
 "common_skip" = "Skip";
+"common_record" = "Record";
+"common_add" = "Add";
 
 "intro_target_message_1" = "Thank you for installing this app.";
 "intro_target_message_2" = "First, please enter target weight and target fat percent.";
@@ -27,3 +29,14 @@
 "tab_history" = "History";
 "tab_settings" = "Settings";
 
+"home_title" = "Home";
+"home_message_elapsed_day_template" = "Day %d";
+"home_message_keep_recording_day_template" = "You are keeping for %d days.";
+"home_comparison_prefix" = "(Comparison to last time: ";
+"home_comparison_suffix" = ")";
+"home_start_prefix" = "Start";
+"home_goal_prefix" = "Goal";
+"home_legend_label_now" = "：Now";
+"home_legend_label_best" = "：Your Best";
+"home_total_loss_template" = "Total loss so far: %.2f%@";
+"home_remain_template" = "Remaining: %.2f%@";

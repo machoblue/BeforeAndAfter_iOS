@@ -22,30 +22,30 @@ struct HomeView: View {
                 VStack {
                     Spacer(minLength: 36)
                     
-                    Text(String(format: "はじめてから%d日目", viewModel.countOfElapsedDay as Int))
+                    Text(String(format: "home_message_elapsed_day_template".localized, viewModel.countOfElapsedDay as Int))
                         .font(.system(size: BAFontSize.small))
-                    Text(String(format: "%d日間 継続中!", viewModel.countOfDayKeepRecording as Int))
+                    Text(String(format: "home_message_keep_recording_day_template".localized, viewModel.countOfDayKeepRecording as Int))
                         .font(.system(size: BAFontSize.large))
     
                     Spacer(minLength: 24)
                     
-                    Separator(title: "体重")
-                    SummaryView(summary: $viewModel.weightSummary, suffix: "kg")
+                    Separator(title: "common_weight".localized)
+                    SummaryView(summary: $viewModel.weightSummary, suffix: "common_kg".localized)
                     
                     Spacer(minLength: 48)
     
-                    Separator(title: "体脂肪率")
-                    SummaryView(summary: $viewModel.fatPercentSummary, suffix: "%")
+                    Separator(title: "common_fat_percent".localized)
+                    SummaryView(summary: $viewModel.fatPercentSummary, suffix: "common_percent".localized)
                     
                     Spacer(minLength: 48)
                 }
             }
-            .navigationBarTitle("Home", displayMode: .inline)
+            .navigationBarTitle("home_title", displayMode: .inline)
             .navigationBarItems(trailing:
                 Button(action: {
                     self.showEditAdd.toggle()
                 }) {
-                    Text("Add")
+                    Text("common_record".localized)
                 }.sheet(isPresented: $showEditAdd) {
                     AddRecordView(record: Record(time: Date().timeIntervalSince1970, weight: UserDefaults.latestWeight, fatPercent: UserDefaults.latestFatPercent),
                                   viewModel: EditAddRecordViewModel())
@@ -92,12 +92,12 @@ struct HomeView: View {
                 Text("\(summary.latest, specifier: "%.2f")\(suffix)")
                     .font(.system(size: BAFontSize.xLarge))
                 HStack {
-                    Text("(前回比: ")
+                    Text("home_comparison_prefix".localized)
                         .font(.system(size: BAFontSize.small))
                     Text("\(summary.comparisonToLastTime == 0 ? "" : summary.comparisonToLastTime > 0 ? "+" : "-")\(abs(summary.comparisonToLastTime), specifier: "%.2f")\(suffix)")
                         .font(.system(size: BAFontSize.small))
                         .foregroundColor(summary.comparisonToLastTime == 0 ? .black : summary.comparisonToLastTime > 0 ? .red : .green)
-                    Text(")")
+                    Text("home_comparison_suffix".localized)
                         .font(.system(size: BAFontSize.small))
                 }
                 
@@ -106,7 +106,7 @@ struct HomeView: View {
                 GeometryReader { geometry in
                     HStack {
                         VStack {
-                            Text("開始時")
+                            Text("home_start_prefix".localized)
                                 .font(.system(size: BAFontSize.small))
                             Text("\(self.summary.first, specifier: "%.2f")\(self.suffix)")
                                 .font(.system(size: BAFontSize.medium))
@@ -117,7 +117,7 @@ struct HomeView: View {
                             .frame(height: 12)
 
                         VStack {
-                            Text("目標")
+                            Text("home_goal_prefix".localized)
                                 .font(.system(size: BAFontSize.small))
                             Text("\(self.summary.target, specifier: "%.2f")\(self.suffix)")
                                 .font(.system(size: BAFontSize.medium))
@@ -134,13 +134,13 @@ struct HomeView: View {
                     Text("●")
                         .font(.system(size: BAFontSize.small))
                         .foregroundColor(.blue)
-                    Text(":現在")
+                    Text("home_legend_label_now".localized)
                         .font(.system(size: BAFontSize.small))
                         .foregroundColor(.black)
                     Text("●")
                         .font(.system(size: BAFontSize.small))
                         .foregroundColor(.gray)
-                    Text(":ベスト")
+                    Text("home_legend_label_best".localized)
                         .font(.system(size: BAFontSize.small))
                         .foregroundColor(.black)
                 }
@@ -148,12 +148,12 @@ struct HomeView: View {
                 Spacer()
                     .frame(width: 1, height: 24)
                 
-                Text(String(format: "始めたときから%.2f%@減りました。", summary.lost as Float, suffix as String))
+                Text(String(format: "home_total_loss_template".localized, summary.lost as Float, suffix as String))
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
 
-                Text(String(format: "あと%.2f%@です。", summary.remainig as Float, suffix as String))
+                Text(String(format: "home_remain_template".localized, summary.remainig as Float, suffix as String))
                     .lineLimit(nil)
                     .font(.system(size: BAFontSize.medium))
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
