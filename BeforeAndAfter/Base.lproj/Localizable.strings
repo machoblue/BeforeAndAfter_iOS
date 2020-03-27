@@ -17,6 +17,7 @@
 "common_record" = "Record";
 "common_add" = "Add";
 "common_cancel" = "Cancel";
+"common_no_item_is_selected" = "No item is selected.";
 
 "intro_target_message_1" = "Thank you for installing this app.";
 "intro_target_message_2" = "First, please enter target weight and target fat percent.";

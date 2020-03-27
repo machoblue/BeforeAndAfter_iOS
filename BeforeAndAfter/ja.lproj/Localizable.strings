@@ -17,6 +17,7 @@
 "common_record" = "記録";
 "common_add" = "追加";
 "common_cancel" = "キャンセル";
+"common_no_item_is_selected" = "No item is selected.";
 
 "intro_target_message_1" = "インストールありがとうございます。";
 "intro_target_message_2" = "まず、目標を入力してください。";

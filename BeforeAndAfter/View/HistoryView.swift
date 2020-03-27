@@ -36,7 +36,11 @@ struct HistoryView: View {
                                   viewModel: EditAddRecordViewModel())
                 }
             )
+            
+            Text("common_no_item_is_selected".localized) // For iPad
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())  // For iPad
+        .padding(.leading, 0.25) // Workaround for DoubleColumnNavigationViewStyle not working issue
         .onAppear {
             self.viewModel.apply(.onAppear)
         }

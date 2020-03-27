@@ -52,6 +52,7 @@ struct HomeView: View {
                 }
             )
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // For iPad
         .onAppear() {
             self.viewModel.apply(.onAppear)
         }

@@ -32,6 +32,7 @@ struct AddRecordView: View {
                     }
                 )
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // For iPad
     }
 }
 

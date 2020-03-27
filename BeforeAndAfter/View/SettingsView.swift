@@ -19,7 +19,11 @@ struct SettingsView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("settings_title", displayMode: .inline)
+            
+            Text("common_no_item_is_selected".localized) // For iPad
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle()) // For iPad
+        .padding(.leading, 0.25)  // Workaround for DoubleColumnNavigationViewStyle not working issue
     }
 }
 

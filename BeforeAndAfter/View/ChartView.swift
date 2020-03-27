@@ -113,6 +113,7 @@ struct ChartView: View {
             }
             .navigationBarTitle("chart_title", displayMode: .inline)
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // For iPad
         .onAppear {
             self.viewModel.apply(.onAppear)
         }
