@@ -21,13 +21,13 @@ struct HistoryRow: View {
             }
             VStack(alignment: .leading) {
                 HStack(alignment: .bottom, spacing: 0) {
-                    Text(record.weight?.description ?? "-")
+                    Text(record.weight == nil ? "-" : String(format: "%.2f", record.weight!))
                         .font(.system(size: BAFontSize.xLarge))
                     Text("common_kg".localized)
                         .font(.system(size: BAFontSize.small))
                     Spacer()
                         .frame(width: BAMargin.medium, height: .zero)
-                    Text(record.fatPercent?.description ?? "-")
+                    Text(record.fatPercent == nil ? "-" : String(format: "%.2f", record.fatPercent!))
                         .font(.system(size: BAFontSize.xLarge))
                     Text("common_percent".localized)
                         .font(.system(size: BAFontSize.small))
