@@ -11,14 +11,14 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Basic")) {
+                Section(header: Text("settings_basic".localized)) {
                     NavigationLink(destination: TargetEditView()) {
-                        Text("Target")
+                        Text("settings_basic_target".localized)
                     }
                 }
             }
             .listStyle(GroupedListStyle())
-            .navigationBarTitle("Settings", displayMode: .inline)
+            .navigationBarTitle("settings_title", displayMode: .inline)
         }
     }
 }

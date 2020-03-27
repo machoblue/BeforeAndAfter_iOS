@@ -17,7 +17,6 @@ struct LineChart: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: LineChartView, context: Context) {
-        print("*** LineChart.updateUIView:", records, mode)
         uiView.mode = mode
         uiView.records = records
         uiView.setNeedsDisplay()

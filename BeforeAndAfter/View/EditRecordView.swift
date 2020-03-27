@@ -14,12 +14,12 @@ struct EditRecordView: View {
     
     var body: some View {
         RecordFormView(record: $record)
-            .navigationBarTitle("Edit", displayMode: .inline)
+            .navigationBarTitle("record_edit_title", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
                 self.viewModel.apply(.onSaveButtonTapped(record: self.record))
                 self.presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Save")
+                Text("common_save".localized)
             })
     }
 }

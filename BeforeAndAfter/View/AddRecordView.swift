@@ -16,19 +16,19 @@ struct AddRecordView: View {
     var body: some View {
         NavigationView {
             RecordFormView(record: $record)
-                .navigationBarTitle("Edit", displayMode: .inline)
+                .navigationBarTitle("record_add_title", displayMode: .inline)
                 .navigationBarItems(
                     leading: Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
-                        Text("Cancel")
+                        Text("common_cancel".localized)
                     },
                     trailing: Button(action: {
                         self.viewModel.apply(.onSaveButtonTapped(record: self.record))
                         self.presentationMode.wrappedValue.dismiss()
                         StoreReviewUtils.requestReviewIfNeeded()
                     }) {
-                        Text("Save")
+                        Text("common_save".localized)
                     }
                 )
         }

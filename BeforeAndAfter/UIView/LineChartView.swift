@@ -314,7 +314,7 @@ class LineChartView: UIView {
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: UIColor.gray,
         ]
-        let weightLabel = ":Weight" as NSString
+        let weightLabel = "chart_legend_weight".localized as NSString
         x += radius * 2 + leftMargin
         let weightLabelPoint = CGPoint(x: x, y: y)
         weightLabel.draw(at: weightLabelPoint, withAttributes: attributes)
@@ -327,7 +327,7 @@ class LineChartView: UIView {
         bezierPath2.addArc(withCenter: center2, radius: radius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
         bezierPath2.fill()
         
-        let fatPercentLabel = ":Fat Percent" as NSString
+        let fatPercentLabel = "chart_legend_fat_percent".localized as NSString
         x += radius * 2 + leftMargin
         let fatPercentLabelPoint = CGPoint(x: x, y: y)
         fatPercentLabel.draw(at: fatPercentLabelPoint, withAttributes: attributes)

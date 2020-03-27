@@ -15,11 +15,11 @@ enum ChartRange: Int, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .threeWeeks:
-            return "3 Weeks"
+            return "chart_range_3_weeks".localized
         case .threeMonths:
-            return "3 Months"
+            return "chart_range_3_months".localized
         case .oneYear:
-            return "1 Year"
+            return "chart_range_1_year".localized
         }
     }
     
@@ -111,7 +111,7 @@ struct ChartView: View {
             
                 LineChart(mode: $mode, records: $viewModel.records)
             }
-            .navigationBarTitle("Chart", displayMode: .inline)
+            .navigationBarTitle("chart_title", displayMode: .inline)
         }
         .onAppear {
             self.viewModel.apply(.onAppear)

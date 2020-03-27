@@ -16,6 +16,7 @@
 "common_skip" = "Skip";
 "common_record" = "Record";
 "common_add" = "Add";
+"common_cancel" = "Cancel";
 
 "intro_target_message_1" = "Thank you for installing this app.";
 "intro_target_message_2" = "First, please enter target weight and target fat percent.";
@@ -40,3 +41,33 @@
 "home_legend_label_best" = "：Your Best";
 "home_total_loss_template" = "Total loss so far: %.2f%@";
 "home_remain_template" = "Remaining: %.2f%@";
+
+"record_add_title" = "New Record";
+
+"record_edit_title" = "Edit Record";
+
+"record_form_weight_header" = "Weight(kg)";
+"record_form_weight_placeholder" = "Weight(kg)";
+"record_form_fat_percent_header" = "Fat Percent(%)(Optional)";
+"record_form_fat_percent_placeholder" = "Fat Percent(%)(Optional)";
+"record_form_note_header" = "Note(Optional)";
+"record_form_note_placeholder" = "Note(Optional)";
+
+"chart_title" = "Chart";
+"chart_range_3_weeks" = "3 Weeks";
+"chart_range_3_months" = "3 Months";
+"chart_range_1_year" = "1 Year";
+"chart_legend_weight" = ": Weight(kg)";
+"chart_legend_fat_percent" = ": Fat Percent(%)";
+
+"history_title" = "History";
+
+"settings_title" = "Settings";
+"settings_basic" = "Basic";
+"settings_basic_target" = "Target";
+
+"settings_basic_target_title" = "Target";
+"target_weight_section_header" = "Weight Target (kg)";
+"target_weight_placeholder" = "Weight Target (kg)";
+"target_fat_percent_section_header" = "Fat Percent Target(Optional)";
+"target_fat_percent_placeholder" = "Fat Percent Target(Optional)";

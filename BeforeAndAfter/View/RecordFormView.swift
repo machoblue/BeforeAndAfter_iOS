@@ -39,9 +39,9 @@ struct RecordFormView: View {
 
     var body: some View {
         List {
-            Section(header: Text("Weight(kg)")) {
+            Section(header: Text("record_form_weight_header".localized)) {
                 HStack {
-                    TextField("Enter your weight in kg.", text: weightBinding)
+                    TextField("record_form_weight_placeholder".localized, text: weightBinding)
                         .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
                         let currentValue = Float(self.weightText) ?? 0
@@ -59,9 +59,9 @@ struct RecordFormView: View {
                 }
             }
             
-            Section(header: Text("Fat Percent")) {
+            Section(header: Text("record_form_fat_percent_header".localized)) {
                 HStack {
-                    TextField("Enter your fat percent.", text: fatPercentBinding)
+                    TextField("record_form_fat_percent_placeholder".localized, text: fatPercentBinding)
                         .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
                         let currentValue = Float(self.fatPercentText) ?? 0
@@ -79,8 +79,8 @@ struct RecordFormView: View {
                 }
             }
 
-            Section(header: Text("Note")) {
-                TextField("Note", text: $record.note.bound)
+            Section(header: Text("record_form_note_header".localized)) {
+                TextField("record_form_note_placeholder".localized, text: $record.note.bound)
             }
 
         }

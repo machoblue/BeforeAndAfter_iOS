@@ -17,9 +17,9 @@ struct TargetEditView: View {
     
     var body: some View {
         List {
-            Section(header: Text("Weight Target (kg)")) {
+            Section(header: Text("target_weight_section_header".localized)) {
                 HStack {
-                    TextField("Enter your weight in kg.", text: $viewModel.weightTargetText)
+                    TextField("target_weight_placeholder".localized, text: $viewModel.weightTargetText)
                         .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
                         let currentValue = Float(self.viewModel.weightTargetText) ?? 0
@@ -35,9 +35,9 @@ struct TargetEditView: View {
                 }
             }
 
-            Section(header: Text("Fat Percent Target")) {
+            Section(header: Text("target_fat_percent_section_header".localized)) {
                 HStack {
-                    TextField("Enter your fat percent.", text: $viewModel.fatPercentTargetText)
+                    TextField("target_fat_percent_placeholder".localized, text: $viewModel.fatPercentTargetText)
                         .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
                         let currentValue = Float(self.viewModel.weightTargetText) ?? 0
@@ -54,12 +54,12 @@ struct TargetEditView: View {
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarTitle("Target")
+        .navigationBarTitle("settings_basic_target_title", displayMode: .inline)
         .navigationBarItems(trailing: Button(action: {
             self.viewModel.apply(.onSaveButtonTapped(weightTarget: Float(self.viewModel.weightTargetText) ?? 0, fatPercentTarget: Float(self.viewModel.fatPercentTargetText) ?? 0))
             self.presentationMode.wrappedValue.dismiss()
         }) {
-            Text("Save")
+            Text("common_save".localized)
         })
         .onAppear() {
             self.viewModel.apply(.onAppear)

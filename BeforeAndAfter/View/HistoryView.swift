@@ -25,12 +25,12 @@ struct HistoryView: View {
                     self.viewModel.apply(.onDelete(record: self.viewModel.records[index]))
                 }
             }
-            .navigationBarTitle("History", displayMode: .inline)
+            .navigationBarTitle("history_title", displayMode: .inline)
             .navigationBarItems(trailing:
                 Button(action: {
                     self.showEditAdd.toggle()
                 }) {
-                    Text("Add")
+                    Text("common_add".localized)
                 }.sheet(isPresented: $showEditAdd) {
                     AddRecordView(record: Record(time: Date().timeIntervalSince1970, weight: UserDefaults.latestWeight, fatPercent: UserDefaults.latestFatPercent),
                                   viewModel: EditAddRecordViewModel())
