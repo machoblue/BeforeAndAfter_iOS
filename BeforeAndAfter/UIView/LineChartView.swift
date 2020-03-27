@@ -9,6 +9,8 @@ import UIKit
 
 class LineChartView: UIView {
     
+    static let maxXAxisLabelFontSize = BAFontSize.xLarge
+    
     let marginTop = BAMargin.medium
     let marginLeading = BAMargin.medium
     let marginTrailing = BAMargin.medium
@@ -258,7 +260,8 @@ class LineChartView: UIView {
         let widthOfSpaceToPlaceXAxisLabel = graphWidth / CGFloat((toTime - fromTime) / mode.unitTime)
         let leftAndRightMargin: CGFloat = 5
         let fontHeightToWidthRatio: CGFloat = 2 // 半角数字は縦：横＝2:1という想定
-        let fontSize = (widthOfSpaceToPlaceXAxisLabel - leftAndRightMargin) / CGFloat(mode.labelMaxLength) * fontHeightToWidthRatio
+        let calculatedFontSize = (widthOfSpaceToPlaceXAxisLabel - leftAndRightMargin) / CGFloat(mode.labelMaxLength) * fontHeightToWidthRatio
+        let fontSize = min(calculatedFontSize, Self.maxXAxisLabelFontSize)
         
         let attributes = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
