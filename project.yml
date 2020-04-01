@@ -11,9 +11,41 @@ targets:
     dependencies: 
       - carthage: Realm
       - carthage: RealmSwift
+      - framework: Carthage/Build/iOS/FIRAnalyticsConnector.framework
+        embed: false
+      - framework: Carthage/Build/iOS/Firebase.framework
+        embed: false
+        link: false
+      - framework: Carthage/Build/iOS/FirebaseAnalytics.framework
+        embed: false
+      - framework: Carthage/Build/iOS/FirebaseCore.framework
+        embed: false
+      - framework: Carthage/Build/iOS/FirebaseCoreDiagnostics.framework
+        embed: false
+      - framework: Carthage/Build/iOS/FirebaseCrashlytics.framework
+        embed: false
+      - framework: Carthage/Build/iOS/FirebaseInstallations.framework
+        embed: false
+      - framework: Carthage/Build/iOS/GoogleAppMeasurement.framework
+        embed: false
+      - framework: Carthage/Build/iOS/GoogleDataTransport.framework
+        embed: false
+      - framework: Carthage/Build/iOS/GoogleDataTransportCCTSupport.framework
+        embed: false
+      - framework: Carthage/Build/iOS/GoogleUtilities.framework
+        embed: false
+      - framework: Carthage/Build/iOS/nanopb.framework
+        embed: false
+      - framework: Carthage/Build/iOS/PromisesObjC.framework
+        embed: false
+      - framework: Carthage/Build/iOS/Realm.framework
+        embed: false
+      - framework: Carthage/Build/iOS/RealmSwift.framework
+        embed: false
     settings:
       MARKETING_VERSION: 1.0.0
       CURRENT_PROJECT_VERSION: 1.0.1
+      OTHER_LDFLAGS: $(OTHER_LDFRAGS) -ObjC
     scheme:
       testTargets:
         - BeforeAndAfterTests
