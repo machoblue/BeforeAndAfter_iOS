@@ -26,9 +26,9 @@ struct TargetEditView: View {
                         let newValue = currentValue + 0.1
                         self.viewModel.weightTargetText = String(format: "%.2f", newValue)
                     }, onDecrement: {
-                        let currentValue = Float(self.viewModel.fatPercentTargetText) ?? 0
+                        let currentValue = Float(self.viewModel.weightTargetText) ?? 0
                         let newValue = currentValue - 0.1
-                        self.viewModel.fatPercentTargetText = String(format: "%.2f", newValue)
+                        self.viewModel.weightTargetText = String(format: "%.2f", newValue)
                     }) {
                         Text("")
                     }
@@ -40,9 +40,9 @@ struct TargetEditView: View {
                     TextField("target_fat_percent_placeholder".localized, text: $viewModel.fatPercentTargetText)
                         .keyboardType(.decimalPad)
                     Stepper(onIncrement: {
-                        let currentValue = Float(self.viewModel.weightTargetText) ?? 0
+                        let currentValue = Float(self.viewModel.fatPercentTargetText) ?? 0
                         let newValue = currentValue + 0.1
-                        self.viewModel.weightTargetText = String(format: "%.2f", newValue)
+                        self.viewModel.fatPercentTargetText = String(format: "%.2f", newValue)
                     }, onDecrement: {
                         let currentValue = Float(self.viewModel.fatPercentTargetText) ?? 0
                         let newValue = currentValue - 0.1
