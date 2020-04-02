@@ -4,10 +4,10 @@ options:
   deploymentTarget:
     iOS: "13.2"
 configs:
-  Develop Debug: debug
-  Production Debug: debug
-  Develop Release: release
-  Production Release: release
+  Develop_Debug: debug
+  Production_Debug: debug
+  Develop_Release: release
+  Production_Relase: release
 targets:
   BeforeAndAfter:
     platform: iOS
