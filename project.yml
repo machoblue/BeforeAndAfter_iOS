@@ -3,6 +3,11 @@ options:
   bundleIdPrefix: com.matsuchiyo
   deploymentTarget:
     iOS: "13.2"
+configs:
+  Develop Debug: debug
+  Production Debug: debug
+  Develop Release: release
+  Production Release: release
 targets:
   BeforeAndAfter:
     platform: iOS
@@ -43,13 +48,16 @@ targets:
       - framework: Carthage/Build/iOS/RealmSwift.framework
         embed: false
     settings:
-      MARKETING_VERSION: 1.0.0
-      CURRENT_PROJECT_VERSION: 1.0.1
+      MARKETING_VERSION: 1.0.1
+      CURRENT_PROJECT_VERSION: 1.0.2
       OTHER_LDFLAGS: $(OTHER_LDFRAGS) -ObjC
     scheme:
       testTargets:
         - BeforeAndAfterTests
         - BeforeAndAfterUITests
+      configVariants:
+        - Develop
+        - Production
   BeforeAndAfterTests:
     platform: iOS
     type: bundle.unit-test
