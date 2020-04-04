@@ -65,6 +65,9 @@ targets:
       configVariants:
         - Develop
         - Production
+    postBuildScripts:
+      - path: BeforeAndAfter/copy_google_service_info_plist.sh
+        name: Copy GoogleService-Info.plist
   BeforeAndAfterTests:
     platform: iOS
     type: bundle.unit-test

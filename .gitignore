@@ -97,4 +97,4 @@ BeforeAndAfter.xcodeproj/project.xcworkspace/contents.xcworkspacedata
 */xcuserdata/*
 Carthage/*
 BeforeAndAfter.xcodeproj/xcshareddata/xcschemes/*
-BeforeAndAfter/GoogleService-Info.plist
+BeforeAndAfter/GoogleService-Info_*.plist
